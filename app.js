@@ -31,6 +31,13 @@ app.use(sessions({secret: 'secretkey', resave: false, saveUninitialized: false})
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//add the router
+// app.use('/', router);
+app.use('/', index);
+app.use('/users', users);
+require("./routes/example.routes.js")(app);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -55,12 +62,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-//add the router
-// app.use('/', router);
-app.use('/', index);
-app.use('/users', users);
-require("./routes/example.routes.js")(app);
 
 //Listening Port
 app.listen(process.env.PORT || 3000, () => console.log('Listening on port 3000!'));
