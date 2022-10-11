@@ -1,8 +1,17 @@
-body {
+/* body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+} */
 
 a {
   color: #00B7FF;
+}
+
+.flex-col-center{
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.flex-col-center h3{
+	text-align: center;
 }

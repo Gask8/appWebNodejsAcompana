@@ -1,0 +1,45 @@
+<%- include('../partials/head')%>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+	var value = $(this).val().toLowerCase();
+	$("#myTable tr").filter(function() {
+	  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	});
+  });
+});
+</script>
+
+<div class="container mt-5">
+	<h1>Celulas</h1>
+	<br>
+	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
+	<br>
+	<div class="container">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Lider</th>
+				</tr>
+			</thead>
+			<tbody id="myTable">
+				<%for (let element of data) {%>
+				<tr>
+					<td><%= element.id_celula %></td>
+					<td><%= element.nombre_celula %></td>
+					<td><%= element.nombre_lider %></td>
+				</tr>
+				<%}%>
+			</tbody>
+		</table>
+		<a href="celula/nuevo" class="btn btn-primary btn-block">Crear</a>
+		<form class="mt-2" method="POST" action="/celula?_method=DELETE" onsubmit="return confirm('En serio quieres borrar todo?');">
+			<button class="btn btn-danger btn-block">Borrar Todo</button>
+		</form>
+	</div>
+</div>
+
+<%- include('../partials/footer')%>

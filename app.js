@@ -8,9 +8,6 @@ const methodOverride = require('method-override');
 const sessions = require('express-session');
 const flash = require('connect-flash');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-
 const app = express();
 const router = express.Router();
 
@@ -31,11 +28,20 @@ app.use(sessions({secret: 'secretkey', resave: false, saveUninitialized: false})
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Flash Notification Handler
+app.use((req,res,next)=>{
+	res.locals.wrong = req.flash('wrong');
+	res.locals.succes = req.flash('succes');
+	res.locals.del = req.flash('del');
+	next();
+})
+
 //add the router
 // app.use('/', router);
+var index = require('./routes/index');
 app.use('/', index);
-app.use('/users', users);
 require("./routes/example.routes.js")(app);
+require("./routes/celula.routes.js")(app);
 
 
 // catch 404 and forward to error handler
@@ -45,13 +51,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// Flash Notification Handler
-app.use((req,res,next)=>{
-	res.locals.wrong = req.flash('wrong');
-	res.locals.succes = req.flash('succes');
-	res.locals.del = req.flash('del');
-	next();
-})
 
 // error handler
 app.use(function(err, req, res, next) {
