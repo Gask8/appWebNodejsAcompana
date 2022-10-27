@@ -5,7 +5,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Contenido no puede estar vacio!"
     });
   }
 
@@ -13,7 +13,7 @@ exports.create = (req, res) => {
   const celula = new Celula({
 	id_celula: req.body.id_celula,
     nombre_celula: req.body.nombre_celula,
-    nombre_lider: req.body.nombre_lider,  
+    id_lider: req.body.id_lider,  
   });
 
   // Save Customer in the database
@@ -21,7 +21,7 @@ exports.create = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Error al Crear una Celula"
+          err.message || "Error al crear una celula"
       });
 	  else {
 		  req.flash('succes','La celula se ha guardado');
@@ -36,7 +36,7 @@ exports.findAll = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Error al regresar Celula de la BD"
+          err.message || "Error al regresar celula de la BD"
       }); 
     else {
 		// var vsession = req.session;
@@ -47,7 +47,7 @@ exports.findAll = (req, res) => {
 
 // Find a single Customer with a customerId
 exports.findOne = (req, res) => {
-  Celula.findById(req.params.id_celula, (err, data) => {
+  Celula.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -62,7 +62,7 @@ exports.findOne = (req, res) => {
 	  // else res.send(data);
 	 else {
 		var vsession = req.session;
-		// res.render('celula/byId',{ data, vsession });
+		res.render('celula/byId',{ data });
 	}
   });
 };
@@ -76,13 +76,13 @@ exports.update = (req, res) => {
     });
   }
   Celula.updateById(
-    req.params.id_celula,
+    req.params.id,
     new Celula(req.body),
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found Celula with id ${req.params.id_celula}.`
+            message: `Not found Celula with id ${req.params.id}.`
           });
         } else {
           res.status(500).send({
@@ -91,8 +91,8 @@ exports.update = (req, res) => {
         }
       } 
 		else {
-			req.flash('succes','El celula se ha actualizado');
-			// res.redirect('/examples/'+req.params.id_celula);
+			req.flash('succes','La celula se ha actualizado');
+			res.redirect('/celula/'+req.params.id);
 		}
     }
   );
@@ -100,7 +100,7 @@ exports.update = (req, res) => {
 
 // Delete a Customer with the specified customerId in the request
 exports.delete = (req, res) => {
-  Celula.remove(req.params.id_celula, (err, data) => {
+  Celula.remove(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -114,7 +114,7 @@ exports.delete = (req, res) => {
     } 
 	  else {
 		  req.flash('del','El celula se ha borrado');
-		  // res.redirect('/examples')
+		  res.redirect('/celula')
 	  }
   });
 };

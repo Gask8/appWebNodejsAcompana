@@ -16,5 +16,14 @@ module.exports = app => {
 	
 	// ALL Delete
 	router.delete("/", celula.deleteAll);
+	
+	// ByID GET
+	router.get("/:id", celula.findOne);
+	
+	// ByID PUT
+	router.put("/:id", celula.update);
+
+	// ByID DELETE
+	router.delete("/:id", celula.delete);
 
 };

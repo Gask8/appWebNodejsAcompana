@@ -1,6 +1,6 @@
- module.exports = {
+module.exports = {
   HOST: "127.0.0.1",
   USER: "root",
-  PASSWORD: "password",
+  PASSWORD: process.env.DB_PASSWORD,
   DB: "acompana"
 };

@@ -1,0 +1,27 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Info de Celula</h2>
+		<form method="POST" action="/celula/<%= data.id_celula %>?_method=PUT">
+			<div class="form-group">
+				<label for="id">Id:</label>
+				<input type="number" class="form-control" id="id" value="<%= data.id_celula %>" disabled>
+			</div>
+			<div class="form-group">
+				<label for="nombre">Nombre:</label>
+				<input type="text" class="form-control" id="nombre" value="<%= data.nombre_celula %>" name="nombre_celula">
+			</div>
+			<div class="form-group">
+				<label for="lider">Lider:</label>
+				<input type="text" class="form-control" id="lider" value="<%= data.id_lider %>" name="id_lider">
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Cambiar</button>
+		</form>
+	</div>
+	<form class="mt-2" method="POST" action="/celula/<%= data.id_celula %>?_method=DELETE" onsubmit="return confirm('En serio quieres borrar todo?');">
+		<button class="btn btn-danger btn-block">Borrar</button>
+	</form>
+</div>
+
+<%- include('../partials/footer')%>
