@@ -41,8 +41,8 @@ app.use((req,res,next)=>{
 // app.use('/', router);
 var index = require('./routes/index');
 app.use('/', index);
-require("./routes/example.routes.js")(app);
 require("./routes/celula.routes.js")(app);
+require("./routes/voluntario.routes.js")(app);
 
 
 // catch 404 and forward to error handler
@@ -64,5 +64,5 @@ app.use(function(err, req, res, next) {
 });
 
 //Listening Port
-app.listen(process.env.PORT || 3000, () => console.log('Listening on port '+process.env.PORT));
+app.listen(process.env.PORT || 3000, () => console.log('Escuchando en el puerto '+process.env.PORT));
 module.exports = app;

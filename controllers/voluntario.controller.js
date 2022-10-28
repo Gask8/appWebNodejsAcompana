@@ -1,15 +1,15 @@
 const Voluntario = require("../models/voluntario.model.js");
 
-// Create and Save a new Customer
+// CREATE ELEMENT
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Contenido no puede estar vacio!"
     });
   }
 
-  // Create a Customer
+  // Create JSON
   const voluntario = new Voluntario({
     id_voluntario: req.body.id_voluntario,
 	id_celula: req.body.id_celula,
@@ -21,122 +21,120 @@ exports.create = (req, res) => {
 	ciudad_pais: req.body.ciudad_pais,
   });
 
-  // Save Customer in the database
+  // Save in the database
   Voluntario.create(voluntario, (err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Voluntario."
+          err.message || "Error al crear una voluntario"
       });
-    // else res.send(data);
 	  else {
-		  req.flash('succes','El voluntario se ha guardado');
-		  // res.redirect('/examples')
+		  req.flash('succes','La voluntario se ha guardado');
+		  res.redirect('/voluntario')
 	  }
   });
 };
 
-// Retrieve all Customers from the database.
+// GET ALL ELEMENTS.
 exports.findAll = (req, res) => {
   Voluntario.getAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving voluntarios."
+          err.message || "Error al regresar voluntario de la BD"
       }); 
     else {
-		var vsession = req.session;
-		// res.render('example/all',{ data, vsession });
+		// var vsession = req.session;
+		res.render('voluntario/list',{ data });
 	}
   });
 };
 
-// Find a single Customer with a customerId
+// FIND BY ID
 exports.findOne = (req, res) => {
-  Voluntario.findById(req.params.id_voluntario, (err, data) => {
+  Voluntario.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Voluntario with id ${req.params.id_voluntario}.`
+          message: `No se encontro voluntario con id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Voluntario with id " + req.params.id_voluntario
+          message: "Error consiguiendo voluntario con id " + req.params.id
         });
       }
     } 
 	  // else res.send(data);
 	 else {
 		var vsession = req.session;
-		// res.render('example/byId',{ data, vsession });
+		res.render('voluntario/byId',{ data });
 	}
   });
 };
 
-// Update a Customer identified by the customerId in the request
+// UPDATRE BY ID
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Contenido no puede estar vacio!"
     });
   }
   Voluntario.updateById(
-    req.params.id_voluntario,
+    req.params.id,
     new Voluntario(req.body),
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found Voluntario with id ${req.params.id_voluntario}.`
+            message: `No se encontro voluntario con id ${req.params.id}.`
           });
         } else {
           res.status(500).send({
-            message: "Error updating Voluntario with id " + req.params.id_voluntario
+            message: "Error actializando voluntario con id " + req.params.id
           });
         }
       } 
 		else {
-			req.flash('succes','El voluntario se ha actualizado');
-			// res.redirect('/examples/'+req.params.example);
+			req.flash('succes','La voluntario se ha actualizado');
+			res.redirect('/voluntario/'+req.params.id);
 		}
     }
   );
 };
 
-// Delete a Customer with the specified customerId in the request
+// DELETE BYID
 exports.delete = (req, res) => {
-  Voluntario.remove(req.params.id_voluntario, (err, data) => {
+  Voluntario.remove(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Voluntario with id ${req.params.id_voluntario}.`
+          message: `No se encontro voluntario con id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Could not delete Voluntario with id " + req.params.id_voluntario
+          message: "No se pudo borrar voluntario con id " + req.params.id
         });
       }
     } 
 	  else {
-		  req.flash('del','El voluntario se ha borrado');
-		  // res.redirect('/examples')
+		  req.flash('succes','El voluntario se ha borrado');
+		  res.redirect('/voluntario')
 	  }
   });
 };
 
-// Delete all Customers from the database.
+// DELETE ALL
 exports.deleteAll = (req, res) => {
   Voluntario.removeAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all voluntarios."
+          err.message || "Error Borrando todas las Voluntarios"
       });
-   // else res.send({ message: `All Examples were deleted successfully!` });
 	  else {
-		  req.flash('del','Se ha borrado todo con exito');
-		  // res.redirect('/examples')
+		  req.flash('succes','Se ha borrado todo con exito');
+		  res.redirect('/voluntario')
 	  }
   });
 };

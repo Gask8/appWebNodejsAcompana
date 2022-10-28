@@ -2,7 +2,7 @@
 <script src="/scripts/script.js"></script>
 
 <div class="container mt-5">
-	<h1>Celulas</h1>
+	<h1>Voluntario</h1>
 	<br>
 	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
 	<br>
@@ -11,22 +11,24 @@
 			<thead>
 				<tr>
 					<th>ID</th>
+					<th>Celula</th>
 					<th>Nombre</th>
-					<th>Lider</th>
+					<th>Celular</th>
 				</tr>
 			</thead>
 			<tbody id="myTable">
 				<%for (let element of data) {%>
 				<tr>
+					<td><%= element.id_voluntario %></td>
 					<td><%= element.id_celula %></td>
-					<td><a href="/celula/<%=element.id_celula%>"><%= element.nombre_celula %></a></td>
-					<td><%= element.id_lider %></td>
+					<td><a href="/voluntario/<%=element.id_voluntario%>"><%= element.nombre %> <%= element.apellido %></a></td>
+					<td><%= element.numero_celular %></td>
 				</tr>
 				<%}%>
 			</tbody>
 		</table>
-		<a href="celula/nuevo" class="btn btn-primary btn-block">Crear</a>
-		<form class="mt-2" method="POST" action="/celula?_method=DELETE" onsubmit="return confirm('En serio quieres borrar todo?');">
+		<a href="voluntario/nuevo" class="btn btn-primary btn-block">Crear</a>
+		<form class="mt-2" method="POST" action="/voluntario?_method=DELETE" onsubmit="return confirm('En serio quieres borrar todo?');">
 			<button class="btn btn-danger btn-block">Borrar Todo</button>
 		</form>
 	</div>

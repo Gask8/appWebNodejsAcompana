@@ -1,6 +1,6 @@
 const Celula = require("../models/celula.model.js");
 
-// Create and Save a new Customer
+// CREATE ELEMENT
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
@@ -9,14 +9,14 @@ exports.create = (req, res) => {
     });
   }
 
-  // Create a Customer
+  // Create JSON
   const celula = new Celula({
 	id_celula: req.body.id_celula,
     nombre_celula: req.body.nombre_celula,
     id_lider: req.body.id_lider,  
   });
 
-  // Save Customer in the database
+  // Save in the database
   Celula.create(celula, (err, data) => {
     if (err)
       res.status(500).send({
@@ -30,7 +30,7 @@ exports.create = (req, res) => {
   });
 };
 
-// Retrieve all Customers from the database.
+// GET ALL ELEMENTS.
 exports.findAll = (req, res) => {
   Celula.getAll((err, data) => {
     if (err)
@@ -45,17 +45,17 @@ exports.findAll = (req, res) => {
   });
 };
 
-// Find a single Customer with a customerId
+// FIND BY ID
 exports.findOne = (req, res) => {
   Celula.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Celula with id ${req.params.id_celula}.`
+          message: `No se encontro celula con id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Celula with id " + req.params.id_celula
+          message: "Error consiguiendo celula con id " + req.params.id
         });
       }
     } 
@@ -67,12 +67,12 @@ exports.findOne = (req, res) => {
   });
 };
 
-// Update a Customer identified by the customerId in the request
+// UPDATRE BY ID
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Contenido no puede estar vacio!"
     });
   }
   Celula.updateById(
@@ -82,11 +82,11 @@ exports.update = (req, res) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found Celula with id ${req.params.id}.`
+            message: `No se encontro celula con id ${req.params.id}.`
           });
         } else {
           res.status(500).send({
-            message: "Error updating Celula with id " + req.params.id_celula
+            message: "Error actializando celula con id " + req.params.id
           });
         }
       } 
@@ -98,28 +98,28 @@ exports.update = (req, res) => {
   );
 };
 
-// Delete a Customer with the specified customerId in the request
+// DELETE BYID
 exports.delete = (req, res) => {
   Celula.remove(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Celula with id ${req.params.id_celula}.`
+          message: `No se encontro celula con id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Could not delete Celula with id " + req.params.id_celula
+          message: "No se pudo borrar celula con id " + req.params.id
         });
       }
     } 
 	  else {
-		  req.flash('del','El celula se ha borrado');
+		  req.flash('succes','El celula se ha borrado');
 		  res.redirect('/celula')
 	  }
   });
 };
 
-// Delete all Customers from the database.
+// DELETE ALL
 exports.deleteAll = (req, res) => {
   Celula.removeAll((err, data) => {
     if (err)
@@ -128,8 +128,23 @@ exports.deleteAll = (req, res) => {
           err.message || "Error Borrando todas las Celulas"
       });
 	  else {
-		  req.flash('del','Se ha borrado todo con exito');
+		  req.flash('succes','Se ha borrado todo con exito');
 		  res.redirect('/celula')
 	  }
+  });
+};
+
+// GET ALL - FOR VOLUNTARIO FORM
+exports.voluntariosAll = (req, res) => {
+  Celula.getAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Error al regresar celula de la BD"
+      }); 
+    else {
+		// var vsession = req.session;
+		res.render('voluntario/form',{ data });
+	}
   });
 };
