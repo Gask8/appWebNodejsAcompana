@@ -1,0 +1,46 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Info de Escucha</h2>
+		<form method="POST" action="/escucha/<%= data.id_escucha %>?_method=PUT">
+			<div class="form-group">
+				<label for="id">Id:</label>
+				<input type="number" class="form-control" id="id" value="<%= data.id_escucha %>" disabled>
+			</div>
+			<div class="form-group">
+				<label for="idDoliente">Id doliente:</label>
+				<input type="number" class="form-control" id="idDoliente" value="<%= data.id_doliente %>" name="id_doliente">
+			</div>
+			<div class="form-group">
+				<label for="idVoluntario">Id voluntario:</label>
+				<input type="number" class="form-control" id="idVoluntario" value="<%= data.id_voluntario %>" name="id_voluntario">
+			</div>
+			<div class="form-group">
+				<label for="fecha">Fecha:</label>
+				<input type="datetime-local" class="form-control" id="fecha" value="<%= data.fecha %>" name="fecha">
+			</div>
+			<div class="form-group">
+				<label for="horaTermino">Hora término:</label>
+				<input type="time" class="form-control" id="horaTermino" value="<%= data.hora_termino %>" name="hora_termino">
+			</div>
+			<div class="form-group">
+				<label for="seCumplio">¿Se cumplió la escucha?:</label>
+				<select class="form-control" id="seCumplio" value="<%= data.se_cumplio %>" name="se_cumplio">
+				  <option value=1>Si</option>
+				  <option value=2>No</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="comentario">Comentario:</label>
+				<input type="textarea" class="form-control" id="comentario" value="<%= data.comentario %>" name="comentario">
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Cambiar</button>
+		</form>
+	</div>
+	<form class="mt-2" method="POST" action="/escucha/<%= data.id_escucha %>?_method=DELETE" onsubmit="return confirm('En serio quieres borrar?');">
+		<button class="btn btn-danger btn-block">Borrar</button>
+	</form>
+</div>
+
+<%- include('../partials/footer')%>

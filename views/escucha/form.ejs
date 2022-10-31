@@ -1,0 +1,43 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Formulario de Escucha</h2>
+		<form method="POST" action="/escucha">
+			<!-- <div class="form-group">
+				<label for="id">Id:</label>
+				<input type="number" class="form-control" id="id" placeholder="Escribir ID" name="id">
+			</div> -->
+			<div class="form-group">
+				<label for="idDoliente">Id doliente:</label>
+				<input type="number" class="form-control" id="idDoliente" name="id_doliente">
+			</div>
+			<div class="form-group">
+				<label for="idVoluntario">Id voluntario:</label>
+				<input type="number" class="form-control" id="idVoluntario" name="id_voluntario">
+			</div>
+			<div class="form-group">
+				<label for="fecha">Fecha:</label>
+				<input type="datetime-local" class="form-control" id="fecha" name="fecha">
+			</div>
+			<div class="form-group">
+				<label for="horaTermino">Hora término:</label>
+				<input type="time" class="form-control" id="horaTermino" name="hora_termino">
+			</div>
+			<div class="form-group">
+				<label for="seCumplio">¿Se cumplió la escucha?:</label>
+				<select class="form-control" id="seCumplio" name="se_cumplio">
+				  <option value=1>Si</option>
+				  <option value=2>No</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="comentario">Comentario:</label>
+				<input type="textarea" class="form-control" id="comentario" name="comentario">
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Crear</button>
+		</form>
+	</div>
+</div>
+
+<%- include('../partials/footer')%>

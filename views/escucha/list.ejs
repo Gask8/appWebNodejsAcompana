@@ -1,0 +1,37 @@
+<%- include('../partials/head')%>
+<script src="/scripts/script.js"></script>
+
+<div class="container mt-5">
+	<h1>Dolientes</h1>
+	<br>
+	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
+	<br>
+	<div class="container">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>ID Doliente</th>
+					<th>ID Voluntario</th>
+					<th>Fecha</th>
+				</tr>
+			</thead>
+			<tbody id="myTable">
+				<%for (let element of data) {%>
+				<tr>
+					<td><a href="/escucha/<%=element.id_escucha%>"><%= element.id_escucha %></a></td>
+					<td><%= element.id_doliente %></td>
+					<td><%= element.id_voluntario %></td>
+					<td><%= element.fecha %></td>
+				</tr>
+				<%}%>
+			</tbody>
+		</table>
+		<a href="escucha/nuevo" class="btn btn-primary btn-block">Crear</a>
+		<form class="mt-2" method="POST" action="/escucha?_method=DELETE" onsubmit="return confirm('En serio quieres borrar todo?');">
+			<button class="btn btn-danger btn-block">Borrar Todo</button>
+		</form>
+	</div>
+</div>
+
+<%- include('../partials/footer')%>
