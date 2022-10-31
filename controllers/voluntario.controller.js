@@ -138,3 +138,18 @@ exports.deleteAll = (req, res) => {
 	  }
   });
 };
+
+// GET ALL - FOR HORARIO FORM
+exports.horariosAll = (req, res) => {
+  Voluntario.getAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Error al regresar horario de la BD"
+      }); 
+    else {
+		// var vsession = req.session;
+		res.render('horario/form',{ data });
+	}
+  });
+};

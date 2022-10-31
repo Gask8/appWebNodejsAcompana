@@ -1,4 +1,5 @@
 const Doliente = require("../models/doliente.model.js");
+const Voluntario = require("../models/voluntario.model.js");
 
 // CREATE ELEMENT
 exports.create = (req, res) => {
@@ -142,5 +143,30 @@ exports.deleteAll = (req, res) => {
 		  req.flash('succes','Se ha borrado todo con exito');
 		  res.redirect('/doliente')
 	  }
+  });
+};
+
+// GET ALL VOLUNTARIO-DOLIENTE - FOR ESCUCHA FORM
+exports.dolientesVoluntariosAll = (req, res) => {
+  Doliente.getAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Error al regresar doliente de la BD"
+      }); 
+    else {
+		
+		Voluntario.getAll((err2, data2) => {
+			if (err2)
+			  res.status(500).send({
+				message:
+				  err2.message || "Error al regresar voluntario de la BD"
+			  }); 
+			else {
+				// var vsession = req.session;
+				res.render('escucha/form',{ data, data2 });
+			}
+	  	});
+	}
   });
 };

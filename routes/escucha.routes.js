@@ -1,5 +1,6 @@
 module.exports = app => {
 	const escucha = require("../controllers/escucha.controller.js");
+	const doliente = require("../controllers/doliente.controller.js");
 	const express = require('express');
 	const router = express.Router();
 	app.use('/escucha', router);
@@ -8,9 +9,8 @@ module.exports = app => {
 	router.get("/", escucha.findAll);
 
 	// NEW Get
-	router.get('/nuevo', (req,res)=>{
-		res.render('escucha/form')
-	})
+	router.get('/nuevo', doliente.dolientesVoluntariosAll);
+	
 	// NEW Post
 	router.post('/', escucha.create);
 	
