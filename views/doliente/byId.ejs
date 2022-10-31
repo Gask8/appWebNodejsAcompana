@@ -1,0 +1,74 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Info de Doliente</h2>
+		<form method="POST" action="/doliente/<%= data.id_doliente %>?_method=PUT">
+			<div class="form-group">
+				<label for="id">Id:</label>
+				<input type="number" class="form-control" id="id" value="<%= data.id_doliente %>" disabled>
+			</div>
+			<div class="form-group">
+				<label for="marca">Marca Temporal:</label>
+				<input type="datetime-local" class="form-control" id="marca" value="<%= data.marca_temporal %>" name="marca_temporal">
+			</div>
+			<div class="form-group">
+				<label for="nombre">Nombre:</label>
+				<input type="text" class="form-control" id="nombre" value="<%= data.marca_temporal %>" name="primer_nombre">
+			</div>
+			<div class="form-group">
+				<label for="apellido">Apellido paterno:</label>
+				<input type="text" class="form-control" id="apellido" value="<%= data.apellido_paterno %>" name="apellido_paterno">
+			</div>
+			<div class="form-group">
+				<label for="edad">Edad:</label>
+				<input type="number" class="form-control" id="edad" value="<%= data.edad %>" name="edad">
+			</div>
+			<div class="form-group">
+				<label for="ciudadPais">Ciudad-País:</label>
+				<input type="text" class="form-control" id="ciudadPais" value="<%= data.ciudad_pais %>" name="ciudad_pais">
+			</div>
+			<div class="form-group">
+				<label for="celular">Número Celular:</label>
+				<input type="text" class="form-control" id="celular" value="<%= data.numero_celular %>" name="numero_celular">
+			</div>
+			<div class="form-group">
+				<label for="correo">Correo:</label>
+				<input type="text" class="form-control" id="correo" value="<%= data.correo %>" name="correo">
+			</div>
+			<div class="form-group">
+				<label for="ligaUrl">Liga URL:</label>
+				<input type="text" class="form-control" id="ligaUrl" value="<%= data.liga_url %>" name="liga_url">
+			</div>
+			<div class="form-group">
+				<label for="ligaId">Liga ID:</label>
+				<input type="text" class="form-control" id="ligaId" value="<%= data.liga_id %>" name="liga_id">
+			</div>
+			<div class="form-group">
+				<label for="ligaPassword">Liga Contraseña:</label>
+				<input type="text" class="form-control" id="ligaPassword" value="<%= data.liga_password %>" name="liga_password">
+			</div>
+			<div class="form-group">
+				<label for="preferenciaHorario">Preferencia de horario:</label>
+				<input type="text" class="form-control" id="preferenciaHorario" value="<%= data.preferencia_de_horario %>" name="preferencia_de_horario">
+			</div>
+			<div class="form-group">
+				<label for="medioEnterarse">Medio por el que se enteró:</label>
+				<input type="text" class="form-control" id="medioEnterarse" value="<%= data.medio_de_enterarse %>" name="medio_de_enterarse">
+			</div>
+			<div class="form-group">
+				<label for="deseaInfo">¿Desea recibir más información?:</label>
+				<select class="form-control" id="deseaInfo" value="<%= data.quieres_recibir_info %>" name="quieres_recibir_info">
+				  <option value=1>Si</option>
+				  <option value=2>No</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Cambiar</button>
+		</form>
+	</div>
+	<form class="mt-2" method="POST" action="/doliente/<%= data.id_doliente %>?_method=DELETE" onsubmit="return confirm('En serio quieres borrar?');">
+		<button class="btn btn-danger btn-block">Borrar</button>
+	</form>
+</div>
+
+<%- include('../partials/footer')%>

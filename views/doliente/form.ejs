@@ -1,0 +1,71 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Formulario de Doliente</h2>
+		<form method="POST" action="/doliente">
+			<!-- <div class="form-group">
+				<label for="id">Id:</label>
+				<input type="number" class="form-control" id="id" placeholder="Escribir ID" name="id">
+			</div> -->
+			<div class="form-group">
+				<label for="marca">Marca Temporal:</label>
+				<input type="datetime-local" class="form-control" id="marca" name="marca_temporal">
+			</div>
+			<div class="form-group">
+				<label for="nombre">Nombre:</label>
+				<input type="text" class="form-control" id="nombre" placeholder="Escribir nombre" name="primer_nombre">
+			</div>
+			<div class="form-group">
+				<label for="apellido">Apellido paterno:</label>
+				<input type="text" class="form-control" id="apellido" placeholder="Escribir apellido" name="apellido_paterno">
+			</div>
+			<div class="form-group">
+				<label for="edad">Edad:</label>
+				<input type="number" class="form-control" id="edad" name="edad">
+			</div>
+			<div class="form-group">
+				<label for="ciudadPais">Ciudad-País:</label>
+				<input type="text" class="form-control" id="ciudadPais" placeholder="Escribir edad" name="ciudad_pais">
+			</div>
+			<div class="form-group">
+				<label for="celular">Número Celular:</label>
+				<input type="text" class="form-control" id="celular" placeholder="Escribir celular" name="numero_celular">
+			</div>
+			<div class="form-group">
+				<label for="correo">Correo:</label>
+				<input type="text" class="form-control" id="correo" placeholder="Escribir correo" name="correo">
+			</div>
+			<div class="form-group">
+				<label for="ligaUrl">Liga URL:</label>
+				<input type="text" class="form-control" id="ligaUrl" placeholder="Escribir URL de liga" name="liga_url">
+			</div>
+			<div class="form-group">
+				<label for="ligaId">Liga ID:</label>
+				<input type="text" class="form-control" id="ligaId" placeholder="Escribir ID de liga" name="liga_id">
+			</div>
+			<div class="form-group">
+				<label for="ligaPassword">Liga Contraseña:</label>
+				<input type="text" class="form-control" id="ligaPassword" placeholder="Escribir contraseña de liga" name="liga_password">
+			</div>
+			<div class="form-group">
+				<label for="preferenciaHorario">Preferencia de horario:</label>
+				<input type="text" class="form-control" id="preferenciaHorario" placeholder="Escribir preferencia de horario" name="preferencia_de_horario">
+			</div>
+			<div class="form-group">
+				<label for="medioEnterarse">Medio por el que se enteró:</label>
+				<input type="text" class="form-control" id="medioEnterarse" placeholder="Escribir medio" name="medio_de_enterarse">
+			</div>
+			<div class="form-group">
+				<label for="deseaInfo">¿Desea recibir más información?:</label>
+				<select class="form-control" id="deseaInfo" name="quieres_recibir_info">
+				  <option value=1>Si</option>
+				  <option value=2>No</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Crear</button>
+		</form>
+	</div>
+</div>
+
+<%- include('../partials/footer')%>

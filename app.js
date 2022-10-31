@@ -43,6 +43,7 @@ var index = require('./routes/index');
 app.use('/', index);
 require("./routes/celula.routes.js")(app);
 require("./routes/voluntario.routes.js")(app);
+require("./routes/doliente.routes.js")(app);
 
 
 // catch 404 and forward to error handler
