@@ -5,6 +5,7 @@ const Escucha = function(escucha) {
   this.id_escucha = escucha.id_escucha;
   this.id_doliente = escucha.id_doliente;
   this.id_voluntario = escucha.id_voluntario;
+  this.numero_escucha = escucha.numero_escucha;
   this.fecha = escucha.fecha;
   this.hora_termino = escucha.hora_termino;
   this.se_cumplio = escucha.se_cumplio;
@@ -56,8 +57,8 @@ Escucha.getAll = result => {
 
 Escucha.updateById = (id_escucha, escucha, result) => {
   sql.query(
-    "UPDATE escucha SET id_doliente = ?, id_voluntario = ?, fecha = ?, hora_termino = ?, se_cumplio = ?, comentario = ? WHERE id_escucha = ?",
-    [escucha.id_doliente, escucha.id_voluntario, escucha.fecha, escucha.hora_termino, escucha.se_cumplio, escucha.comentario, id_escucha],
+    "UPDATE escucha SET id_doliente = ?, id_voluntario = ?, numero_escucha = ?, fecha = ?, hora_termino = ?, se_cumplio = ?, comentario = ? WHERE id_escucha = ?",
+    [escucha.id_doliente, escucha.id_voluntario, escucha.numero_escucha, escucha.fecha, escucha.hora_termino, escucha.se_cumplio, escucha.comentario, id_escucha],
     (err, res) => {
       if (err) {
         console.log("Error: ", err);

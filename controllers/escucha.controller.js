@@ -14,6 +14,7 @@ exports.create = (req, res) => {
 	id_escucha: req.body.id_escucha,
   	id_doliente: req.body.id_doliente,
   	id_voluntario: req.body.id_voluntario,
+	numero_escucha: req.body.numero_escucha,
   	fecha: req.body.fecha,
   	hora_termino: req.body.hora_termino,
   	se_cumplio: req.body.se_cumplio,
