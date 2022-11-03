@@ -1,13 +1,169 @@
-<%- include('../partials/head')%>
+<%- include('../partials/headless')%>
+<link rel="stylesheet" href="/stylesheets/form.css">
 
-<div class="container">
+<div class="container mt-5" id="crform" style="margin: 50px auto;">
+
+	<div class="activesld nonact">
+		<div class="jumbotron">
+			<center><img id="mob-img" alt="logo" loading="lazy" class="form-image" style="border:0" src="https://lh3.googleusercontent.com/Tee-7caHGFo1k-n0etlNqjqRy_jY0WT29G9pIXl6iBZK__0I2APmnZQrl4xh7aL8Ybi8jPN_vr2coNgIjJTxuT4cbjLlPBMqJnCOAcYKIiqI7zXf2lJwlzvOFkfNeirwRA=w939"></center>
+			<hr>
+			<h2 class="text-center">Línea de Acompañamiento en Duelo (registro)</h2>
+			<hr>
+			<div>Bienvenido, este formulario es un registro para el servicio de Acompañamiento en duelo de  Fundación Acompaña.</div>
+			<hr>
+			<div>Es muy importante contar con toda la información necesaria para asignarte a un Acompañante en Duelo, quien realizará  3 escuchas, una por semana y canalización de ser necesario a un Grupo de Ayuda Mutua (GAM).</div>
+			<hr>
+		</div>
+	</div>
+	
+	<div class="nonact">
+		<div class="jumbotron">
+			<div>¿Qué es la Escucha?</div>
+			<hr>
+			<center><img id="mob-img" alt="infografia" loading="lazy" class="form-image" style="border:0" src="https://lh6.googleusercontent.com/7j9vNVXjVF989UuF8Nt0WOxkaNOnOA_ozBBTYvH4N_jazvpa2eNm2bnDdVn9RuvxwadnG4kdRWwBO0p5p7GWAzv27mH2L6nvtucQfQDmcf6nkppKRvoMAUeftGmblWwTYA=w800"></center>
+		</div>
+	</div>
+
+
+	<form action="/doliente" method="post">
+		
+		<div class="nonact">
+			<div class="jumbotron">
+				
+				<div class="form-group">
+					<label for="nombre">1. Por favor, danos tu nombre (solo primer nombre)<span class="red_star">*</span></label>
+					<input type="text" class="form-control" id="nombre" placeholder="Escribir nombre" name="primer_nombre">
+				</div>
+				<div class="form-group">
+					<label for="apellido">2. Por favor, escribe tu apellido paterno<span class="red_star">*</span></label>
+					<input type="text" class="form-control" id="apellido" placeholder="Escribir apellido" name="apellido_paterno">
+				</div>
+				<div class="form-group">
+					<label for="celular">3. Número celular<span class="red_star">*</span></label>
+					<input type="tel" class="form-control" id="celular" placeholder="Escribir celular" name="numero_celular">
+				</div>
+				<div class="form-group">
+					<label for="correo">4. Correo electrónico<span class="red_star">*</span></label>
+					<input type="email" class="form-control" id="correo" placeholder="Escribir correo" name="correo">
+				</div>
+				<div class="form-group">
+					<label for="edad">5. ¿Qué edad tienes?<span class="red_star">*</span></label>
+					<input type="number" class="form-control" id="edad" name="edad">
+				</div>
+				<div class="form-group">
+					<label for="ciudadPais">6. ¿En qué ciudad y país vives?<span class="red_star">*</span></label>
+					<input type="text" class="form-control" id="ciudadPais" placeholder="Escribir Ciudad" name="ciudad_pais">
+				</div>
+				<div class="form-group">
+					<label for="medioEnterarse">7. ¿Por cuál medio te enteraste de la  Línea de acompañamiento en duelo Acompaña?<span class="red_star">*</span></label>
+					<select class="form-control" id="medioEnterarse" name="medio_de_enterarse">
+						<option disabled selected value> -- Elije una Opción -- </option>
+						<option value="peregrino_magdala"> Soy peregrino de Magdala </option>
+						<option value="facebook"> Facebook </option>
+						<option value="instagram"> Instagram </option>
+						<option value="recomendacion"> Recomendación </option>
+						<option value="ferretica_empresa"> Ferretica Empresa </option>
+						<option value="correo_electronico"> Correo electrónico </option>
+						<option value="otro"> Otro </option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="nonact">
+			<div class="jumbotron">
+				<div class="form-group">
+					<label for="fallecido_fecha">8. ¿Cuándo falleció tu ser querido?<span class="red_star">*</span></label>
+					<input type="date" class="form-control" id="fallecido_fecha" placeholder="Escribir" name="">
+				</div>
+				<div class="form-group">
+					<label for="fallecido_nombre">9. Nombre de tu ser querido que murió<span class="red_star">*</span></label>
+					<input type="text" class="form-control" id="fallecido_nombre" placeholder="Escribir" name="">
+				</div>
+				<div class="form-group">
+					<label for="fallecido_relacion">10. ¿Qué relación guardabas con tu ser querido?<span class="red_star">*</span></label>
+					<select class="form-control" id="fallecido_relacion" name="">
+						<option disabled selected value> -- Elije una Opción -- </option>
+						<option value="padre"> Padre </option>
+						<option value="madre"> Madre </option>
+						<option value="hijo"> Hijo (a) </option>
+						<option value="hermano"> Hermano (a) </option>
+						<option value="amigo"> Amigo (a) </option>
+						<option value="conyuge"> Conyúge </option>
+						<option value="otro"> Otro </option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="fallecido_muerte">11. ¿Cuál fue el motivo de fallecimiento de tu ser querido?<span class="red_star">*</span></label>
+					<select class="form-control" id="fallecido_muerte" name="">
+						<option disabled selected value> -- Elije una Opción -- </option>
+						<option value="accidente"> Accidente </option>
+						<option value="enfermedad"> Enfermedad </option>
+						<option value="suicidio"> Suicidio </option>
+						<option value="coronavirus"> Coronavirus </option>
+						<option value="otro"> Otro </option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="fallecido_edad">12. ¿Qué edad tenía tu ser querido?<span class="red_star">*</span></label>
+					<input type="number" class="form-control" id="fallecido_edad" name="">
+				</div>
+			</div>
+		</div>
+		
+		<div class="nonact">
+			<div class="jumbotron">
+				<div class="form-group">
+					<label for="preferenciaHorario">13. ¿En qué horario prefieres tener tus escuchas ?<span class="red_star">*</span></label>
+					<select class="form-control" id="preferenciaHorario" name="preferencia_de_horario">
+						<option disabled selected value> -- Elije una Opción -- </option>
+						<option value="am"> AM (Por la mañana) </option>
+						<option value="pm"> PM (Por la tarde) </option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="deseaInfo">¿Te gustaría recibir información sobre las actividades que se imparten en la Fundación?</label>
+					<select class="form-control" id="deseaInfo" name="quieres_recibir_info">
+						<option disabled selected value> -- Elije una Opción -- </option>
+						<option value=1> Sí </option>
+						<option value=0> No </option>
+					</select>
+				</div>
+			</div>
+		</div>
+		
+		<div class="nonact">
+			<div class="jumbotron">
+				<hr class="hr-big">
+				<div class="form-group">
+					<p>Política de privacidad</p>
+					<p>Al hacer clic en "Enviar", aceptas enviar tu información a Fundación Acompaña, donde nos comprometemos a usarla conforme a los Términos, Condiciones y Aviso de Privacidad.</p>
+					<p><a href="https://acompana.org/aviso-de-privacidad">https://acompana.org/aviso-de-privacidad</a></p>
+				</div>
+				<hr class="hr-big">
+				<center><h3>Pulse Enviar para terminar el formulario</h3></center>
+				<center><button class="btn btn-primary" style="width: 25%">Enviar</button></center>
+				<hr class="hr-big">
+			</div>
+		</div>
+	
+	</form>
+
+	<div class="botombtn">
+		<button id="atr" style="display: none" class="btn btn-primary" onclick="atras()">&lt; Anterior</button><button id="adl" class="btn btn-primary" onclick="adelante()">Siguiente &gt;</button>
+	</div>
+
+</div>
+
+
+<!-- <div class="container">
 	<div class="jumbotron mt-5">
 		<h2>Formulario de Doliente</h2>
 		<form method="POST" action="/doliente">
-			<!-- <div class="form-group">
+			<div class="form-group">
 				<label for="id">Id:</label>
 				<input type="number" class="form-control" id="id" placeholder="Escribir ID" name="id">
-			</div> -->
+			</div>
 			<div class="form-group">
 				<label for="marca">Marca Temporal:</label>
 				<input type="datetime-local" class="form-control" id="marca" name="marca_temporal">
@@ -66,6 +222,7 @@
 			<button type="submit" class="btn btn-primary btn-block">Crear</button>
 		</form>
 	</div>
-</div>
+</div> -->
 
+<script src="/scripts/form.js"></script>
 <%- include('../partials/footer')%>

@@ -36,8 +36,8 @@ exports.create = (req, res) => {
           err.message || "Error al crear un doliente"
       });
 	  else {
-		  req.flash('succes','El doliente se ha guardado');
-		  res.redirect('/doliente')
+		  // req.flash('succes','El doliente se ha guardado');
+		  res.redirect('/gracias')
 	  }
   });
 };
