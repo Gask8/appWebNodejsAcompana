@@ -16,6 +16,11 @@ const Doliente = function(doliente) {
   this.preferencia_de_horario = doliente.preferencia_de_horario;
   this.medio_de_enterarse = doliente.medio_de_enterarse;
   this.quieres_recibir_info = doliente.quieres_recibir_info;
+  this.f_fecha_muerte = doliente.f_fecha_muerte;
+  this.f_nombre = doliente.f_nombre;
+  this.f_tipo_relacion = doliente.f_tipo_relacion;
+  this.f_motivo_muerte = doliente.f_motivo_muerte;
+  this.f_edad_muerte = doliente.f_edad_muerte;
 };
 
 Doliente.create = (newDoliente, result) => {
@@ -27,6 +32,18 @@ Doliente.create = (newDoliente, result) => {
     }
     console.log("doliente creado: ", { id: res.id_doliente, ...newDoliente });
     result(null, { id: res.id_doliente, ...newDoliente });
+  });
+};
+
+Doliente.lastID = (primer_nombre,apellido_paterno, result) => {
+  sql.query(`SELECT id_doliente FROM doliente WHERE primer_nombre = '${primer_nombre}' AND apellido_paterno = '${apellido_paterno}'`, (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(err, null);
+      return;
+    }
+	  console.log("Ultimo Id: ", res[0]);
+	  return res[0].id_doliente;
   });
 };
 
