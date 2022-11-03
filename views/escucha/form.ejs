@@ -13,7 +13,7 @@
 				<select name="id_doliente" id="idDoliente" class="form-control">
 					<option disabled selected value> -- Elije un Doliente -- </option>
 					<%for (let element of data) {%>
-						<option value="<%=element.id_doliente%>"><%= element.id_doliente %></option>
+						<option value="<%=element.id_doliente%>"><%= element.primer_nombre %> <%= element.apellido_paterno %></option>
 					<%}%>
 				</select>
 			</div>
@@ -22,7 +22,7 @@
 				<select name="id_voluntario" id="idVoluntario" class="form-control">
 					<option disabled selected value> -- Elije un Voluntario -- </option>
 					<%for (let element2 of data2) {%>
-						<option value="<%=element2.id_voluntario%>"><%= element2.id_voluntario %></option>
+						<option value="<%=element2.id_voluntario%>"><%= element2.nombre %> <%= element2.apellido %></option>
 					<%}%>
 				</select>
 			</div>
