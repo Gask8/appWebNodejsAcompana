@@ -8,9 +8,8 @@ module.exports = app => {
 	router.get("/", doliente.findAll);
 
 	// NEW Get
-	router.get('/nuevo', (req,res)=>{
-		res.render('doliente/form')
-	})
+	router.get("/nuevo", doliente.findAllNew);
+
 	// NEW Post
 	router.post('/', doliente.create);
 	

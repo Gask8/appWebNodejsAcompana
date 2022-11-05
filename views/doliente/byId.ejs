@@ -10,7 +10,7 @@
 			</div>
 			<div class="form-group">
 				<label for="marca">Marca Temporal:</label>
-				<input type="datetime-local" class="form-control" id="marca" value="<%= data.marca_temporal %>" name="marca_temporal">
+				<p><%=data.marca_temporal.toLocaleString('es-MX', { timeZone: 'America/Mexico_City'})%></p>
 			</div>
 			<div class="form-group">
 				<label for="nombre">Nombre:</label>

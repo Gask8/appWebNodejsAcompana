@@ -22,7 +22,7 @@ Horario.create = (newHorario, result) => {
 };
 
 Horario.findById = (id, result) => {
-  sql.query(`SELECT * FROM horario WHERE id_horario = ${id}`, (err, res) => {
+  sql.query(`SELECT * FROM horario WHERE id_voluntario = ${id}`, (err, res) => {
     if (err) {
       console.log("Error: ", err);
       result(err, null);

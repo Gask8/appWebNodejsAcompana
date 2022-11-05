@@ -35,18 +35,6 @@ Doliente.create = (newDoliente, result) => {
   });
 };
 
-Doliente.lastID = (primer_nombre,apellido_paterno, result) => {
-  sql.query(`SELECT id_doliente FROM doliente WHERE primer_nombre = '${primer_nombre}' AND apellido_paterno = '${apellido_paterno}'`, (err, res) => {
-    if (err) {
-      console.log("Error: ", err);
-      result(err, null);
-      return;
-    }
-	  console.log("Ultimo Id: ", res[0]);
-	  return res[0].id_doliente;
-  });
-};
-
 Doliente.findById = (id, result) => {
   sql.query(`SELECT * FROM doliente WHERE id_doliente = ${id}`, (err, res) => {
     if (err) {
@@ -65,6 +53,19 @@ Doliente.findById = (id, result) => {
     result({ kind: "not_found" }, null);
   });
 };
+
+Doliente.getAllNew = result => {
+  sql.query("SELECT d.id_doliente, primer_nombre, apellido_paterno, edad, numero_celular FROM doliente d, escucha e WHERE d.id_doliente != e.id_doliente;", (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(null, err);
+      return;
+    }
+	  console.log("dolientes encontrados",res);
+	  result(null, res);
+  });
+};
+
 
 Doliente.getAll = result => {
   sql.query("SELECT * FROM doliente", (err, res) => {

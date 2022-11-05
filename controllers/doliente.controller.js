@@ -27,11 +27,11 @@ exports.create = (req, res) => {
   	preferencia_de_horario: req.body.preferencia_de_horario,
   	medio_de_enterarse: req.body.medio_de_enterarse,
   	quieres_recibir_info: req.body.quieres_recibir_info,
-	f_fecha_muerte: req.body.f_fecha_muerte,
-	f_nombre: req.body.f_nombre,
-	f_tipo_relacion: req.body.f_tipo_relacion,
-	f_motivo_muerte: req.body.f_motivo_muerte,
-	f_edad_muerte: req.body.f_edad_muerte
+	  f_fecha_muerte: req.body.f_fecha_muerte,
+	  f_nombre: req.body.f_nombre,
+	  f_tipo_relacion: req.body.f_tipo_relacion,
+	  f_motivo_muerte: req.body.f_motivo_muerte,
+	  f_edad_muerte: req.body.f_edad_muerte
   });
 
   // Save in the database
@@ -42,8 +42,7 @@ exports.create = (req, res) => {
           err.message || "Error al crear un doliente"
       });
 	  else {
-		  console.log(Doliente.lastID(req.body.primer_nombre,req.body.apellido_paterno))
-		  // req.flash('succes','El doliente se ha guardado');
+		  req.flash('succes','El doliente se ha guardado');
 		  res.redirect('/gracias')
 	  }
   });
@@ -60,6 +59,20 @@ exports.findAll = (req, res) => {
     else {
 		// var vsession = req.session;
 		res.render('doliente/list',{ data });
+	}
+  });
+};
+
+exports.findAllNew = (req, res) => {
+  Doliente.getAllNew((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Error al regresar doliente de la BD"
+      }); 
+    else {
+		// var vsession = req.session;
+		res.render('doliente/listNew',{ data });
 	}
   });
 };
