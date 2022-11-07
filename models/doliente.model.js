@@ -134,4 +134,16 @@ Doliente.removeAll = result => {
   });
 };
 
+Doliente.findNotEscucha = result => {
+  sql.query("SELECT d.id_doliente, d.primer_nombre, d.apellido_paterno, d.edad FROM doliente d LEFT JOIN escucha e USING(id_doliente) WHERE e.id_doliente IS NULL", (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(null, err);
+      return;
+    }
+	  console.log("dolientes sin escucha encontrados",res);
+	  result(null, res);
+  });
+};
+
 module.exports = Doliente;
