@@ -39,7 +39,7 @@
 			<button type="submit" class="btn btn-primary btn-block">Cambiar</button>
 		</form>
 	</div>
-	<a href="/horario/<%= data.id_voluntario %>" class="btn btn-info btn-block">Ver Horarios</a>
+	<a href="/horario/voluntarios/<%= data.id_voluntario %>" class="btn btn-info btn-block">Ver Horarios</a>
 	<form class="mt-2" method="POST" action="/voluntario/<%= data.id_voluntario %>?_method=DELETE" onsubmit="return confirm('En serio quieres borrar?');">
 		<button class="btn btn-danger btn-block">Borrar</button>
 	</form>

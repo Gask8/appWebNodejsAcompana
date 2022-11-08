@@ -67,6 +67,32 @@ exports.create = async(req, res) => {
   res.redirect('/escucha')
 };
 
+
+// Mandar Recordatorios
+exports.reminder = async(req, res) => {
+
+  await Escucha.getAllToday(async(err, data) => {
+    try{
+      for (let element of data) {
+        let volnum = "521"+element.numvol+"@c.us";
+        let dolunum = "521"+element.numdol+"@c.us";
+        let nomdol=element.primer_nombre+" "+element.apellido_paterno;
+        let hoy = element.fecha.toISOString().split('T')[0];
+        //Mensaje a doliente
+        client.sendMessage(dolunum, "Hola, tus cita es hoy a las: "+hoy+" y tu zoom sera: Join Zoom Meeting https://us05web.zoom.us/j/9631463760?pwd=aVgvZERWQXNnL256UE9BemVYbHpIdz09 Meeting ID: 963 146 3760 Passcode: Na3UWS");
+        //Mensaje a voluntario
+        client.sendMessage(volunum, "Hola, tienes una cita hoy a las "+hoy+" con "+nomdol+" y tu zoom sera: Join Zoom Meeting https://us05web.zoom.us/j/9631463760?pwd=aVgvZERWQXNnL256UE9BemVYbHpIdz09 Meeting ID: 963 146 3760 Passcode: Na3UWS");
+      }
+    }
+    catch{
+      console.log("Error enviar recordatorios "+err);
+    }
+  });
+  
+  req.flash('succes','Los recordatiorios se han mandado');
+  res.redirect('/escucha')
+};
+
 // GET ALL ELEMENTS.
 exports.findAll = (req, res) => {
   Escucha.getAll((err, data) => {

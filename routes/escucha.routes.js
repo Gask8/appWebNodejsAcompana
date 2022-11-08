@@ -13,7 +13,10 @@ module.exports = app => {
 
 	// NEW Get
 	router.get('/nuevo', doliente.dolientesVoluntariosAll);
-	
+
+	// NEW Post
+	router.post('/reminder', escucha.reminder);
+
 	// NEW Post
 	router.post('/', escucha.create);
 	

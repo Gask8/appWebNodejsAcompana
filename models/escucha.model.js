@@ -55,7 +55,7 @@ Escucha.getAll = result => {
 
 Escucha.getAllToday = result => {
   let today = new Date().toISOString().split('T')[0]+"%";
-  sql.query("SELECT id_escucha, e.id_doliente, e.id_voluntario, primer_nombre, apellido_paterno, nombre, apellido, fecha FROM escucha e, doliente d, voluntario v WHERE d.id_doliente = e.id_doliente AND e.id_voluntario = v.id_voluntario AND fecha Like ?",[today], (err, res) => {
+  sql.query("SELECT id_escucha, e.id_doliente, e.id_voluntario, primer_nombre, apellido_paterno, nombre, apellido, fecha, d.numero_celular as numdol, v.numero_celular as numvol FROM escucha e, doliente d, voluntario v WHERE d.id_doliente = e.id_doliente AND e.id_voluntario = v.id_voluntario AND fecha Like ?",[today], (err, res) => {
     if (err) {
       console.log("Error: ", err);
       result(null, err);

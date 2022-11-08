@@ -5,11 +5,15 @@ module.exports = app => {
 	const router = express.Router();
 	app.use('/horario', router);
 
+
 	// ALL Get
 	router.get("/", horario.findAll);
 
 	// NEW Get
 	router.get('/nuevo', voluntario.horariosAll);
+
+	// ALL Get for Voluntarisos
+	router.get("/voluntarios/:id", horario.findAllForVol);
 	
 	// NEW Post
 	router.post('/', horario.create);

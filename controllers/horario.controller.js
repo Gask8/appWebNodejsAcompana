@@ -56,6 +56,21 @@ exports.findAll = (req, res) => {
   });
 };
 
+// GET ALL ELEMENTS for one voluntario.
+exports.findAllForVol = (req, res) => {
+  Horario.getAllForVol(req.params.id, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Error al regresar horario de la BD"
+      }); 
+    else {
+		// var vsession = req.session;
+		res.render('horario/list',{ data });
+	}
+  });
+};
+
 // FIND BY ID
 exports.findOne = (req, res) => {
   Horario.findById(req.params.id, (err, data) => {
