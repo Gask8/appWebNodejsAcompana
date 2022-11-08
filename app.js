@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const sessions = require('express-session');
 const flash = require('connect-flash');
+const { Client,LocalAuth  } = require('whatsapp-web.js');
 
 const app = express();
 const router = express.Router();

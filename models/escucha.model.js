@@ -31,13 +31,11 @@ Escucha.findById = (id, result) => {
       result(err, null);
       return;
     }
-
     if (res.length) {
       console.log("escucha encontrado: ", res[0]);
       result(null, res[0]);
       return;
     }
-
     // not found Example with the id
     result({ kind: "not_found" }, null);
   });
@@ -65,13 +63,11 @@ Escucha.updateById = (id_escucha, escucha, result) => {
         result(null, err);
         return;
       }
-
       if (res.affectedRows == 0) {
         // not found Example with the id
         result({ kind: "not_found" }, null);
         return;
       }
-
       console.log("escucha: actualizado", { id: id_escucha, ...escucha });
       result(null, { id: id_escucha, ...escucha });
     }
@@ -85,13 +81,11 @@ Escucha.remove = (id_escucha, result) => {
       result(null, err);
       return;
     }
-
     if (res.affectedRows == 0) {
       // not found Example with the id
       result({ kind: "not_found" }, null);
       return;
     }
-
     console.log("escucha borrado con id: ", id_escucha);
     result(null, res);
   });
@@ -104,7 +98,6 @@ Escucha.removeAll = result => {
       result(null, err);
       return;
     }
-
     console.log(`deleted ${res.affectedRows} escuchas`);
     result(null, res);
   });

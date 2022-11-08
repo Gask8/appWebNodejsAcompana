@@ -1,4 +1,6 @@
+const { Client,LocalAuth  } = require('whatsapp-web.js');
 const Escucha = require("../models/escucha.model.js");
+const client = require("../config/client.js");
 
 // CREATE ELEMENT
 exports.create = (req, res) => {
@@ -11,10 +13,10 @@ exports.create = (req, res) => {
 
   // Create JSON
   const escucha = new Escucha({	  
-	id_escucha: req.body.id_escucha,
+	  id_escucha: req.body.id_escucha,
   	id_doliente: req.body.id_doliente,
   	id_voluntario: req.body.id_voluntario,
-	numero_escucha: req.body.numero_escucha,
+	  numero_escucha: req.body.numero_escucha,
   	fecha: req.body.fecha,
   	hora_termino: req.body.hora_termino,
   	se_cumplio: req.body.se_cumplio,
@@ -29,6 +31,8 @@ exports.create = (req, res) => {
           err.message || "Error al crear una escucha"
       });
 	  else {
+      client.sendMessage("5215540270556@c.us", "hola");
+      client.sendMessage("5215540270556@c.us", "hola");
 		  req.flash('succes','La escucha se ha guardado');
 		  res.redirect('/escucha')
 	  }
