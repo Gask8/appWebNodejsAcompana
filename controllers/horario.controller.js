@@ -9,27 +9,36 @@ exports.create = (req, res) => {
     });
   }
 
-  // Create JSON
-  const horario = new Horario({
-	id_horario: req.body.id_horario,	  
-	id_voluntario: req.body.id_voluntario,
-  	hora_comienzo: req.body.hora_comienzo,
-  	hora_termino: req.body.hora_termino,
-  	dia_semana: req.body.dia_semana,
-  });
+  console.log(req.body)
 
-  // Save in the database
-  Horario.create(horario, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Error al crear un horario"
-      });
-	  else {
-		  req.flash('succes','El horario se ha guardado');
-		  res.redirect('/horario')
-	  }
-  });
+  var cantidadHorarios = req.body.horariosCantidad;
+  var i;
+  
+  for(i=0; i <cantidadHorarios; i++){
+	  
+	  var horaComienzo = `${'req.body.hora_comienzo'+i}`;
+	  var horaTermino = `${'req.body.hora_termino'+i}`;
+	  var diaSemana = `${'req.body.dia_semana'+i}`;
+	  
+	  // Create JSON}
+	  const horario = new Horario({
+		id_horario: req.body.id_horario,	  
+		id_voluntario: req.body.id_voluntario,
+		hora_comienzo:  eval(horaComienzo),
+		hora_termino: eval(horaTermino),
+		dia_semana: eval(diaSemana),
+	  });
+
+	  // Save in the database
+	  Horario.create(horario, (err, data) => {
+		
+	  });
+
+	}
+	
+	req.flash('succes','El horario se ha guardado');
+	res.redirect('/horario')
+	
 };
 
 // GET ALL ELEMENTS.
