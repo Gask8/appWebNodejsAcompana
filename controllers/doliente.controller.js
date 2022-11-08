@@ -183,8 +183,12 @@ exports.dolientesVoluntariosAll = (req, res) => {
 				  err2.message || "Error al regresar voluntario de la BD"
 			  }); 
 			else {
+        var data3 = {
+          id: req.query.id_doliente || null,
+          name: (req.query.name+" "+req.query.lastname) || null,
+        }
 				// var vsession = req.session;
-				res.render('escucha/form',{ data, data2 });
+				res.render('escucha/form',{ data, data2, data3 });
 			}
 	  	});
 	}

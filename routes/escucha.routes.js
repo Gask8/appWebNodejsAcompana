@@ -6,7 +6,10 @@ module.exports = app => {
 	app.use('/escucha', router);
 
 	// ALL Get
-	router.get("/", escucha.findAll);
+	router.get("/todas", escucha.findAll);
+
+	// ALL Get
+	router.get("/", escucha.findAllToday);
 
 	// NEW Get
 	router.get('/nuevo', doliente.dolientesVoluntariosAll);

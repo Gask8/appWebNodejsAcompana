@@ -55,7 +55,7 @@ Doliente.findById = (id, result) => {
 };
 
 Doliente.getAllNew = result => {
-  sql.query("SELECT d.id_doliente, primer_nombre, apellido_paterno, edad, numero_celular FROM doliente d, escucha e WHERE d.id_doliente != e.id_doliente;", (err, res) => {
+  sql.query("SELECT * FROM doliente WHERE id_doliente NOT in(SELECT d.id_doliente FROM doliente d, escucha e WHERE d.id_doliente = e.id_doliente);", (err, res) => {
     if (err) {
       console.log("Error: ", err);
       result(null, err);

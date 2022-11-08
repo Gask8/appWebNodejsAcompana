@@ -42,7 +42,20 @@ Escucha.findById = (id, result) => {
 };
 
 Escucha.getAll = result => {
-  sql.query("SELECT * FROM escucha", (err, res) => {
+  sql.query("SELECT id_escucha, e.id_doliente, e.id_voluntario, primer_nombre, apellido_paterno, nombre, apellido, fecha FROM escucha e, doliente d, voluntario v WHERE d.id_doliente = e.id_doliente AND e.id_voluntario = v.id_voluntario", (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(null, err);
+      return;
+    }
+	  console.log("escuchas encontrados",res);
+	  result(null, res);
+  });
+};
+
+Escucha.getAllToday = result => {
+  let today = new Date().toISOString().split('T')[0]+"%";
+  sql.query("SELECT id_escucha, e.id_doliente, e.id_voluntario, primer_nombre, apellido_paterno, nombre, apellido, fecha FROM escucha e, doliente d, voluntario v WHERE d.id_doliente = e.id_doliente AND e.id_voluntario = v.id_voluntario AND fecha Like ?",[today], (err, res) => {
     if (err) {
       console.log("Error: ", err);
       result(null, err);

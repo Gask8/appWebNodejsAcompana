@@ -1,16 +1,17 @@
 const { Client,LocalAuth  } = require('whatsapp-web.js');
 const Escucha = require("../models/escucha.model.js");
+const Voluntario = require("../models/voluntario.model.js");
+const Doliente = require("../models/doliente.model.js");
 const client = require("../config/client.js");
 
-// CREATE ELEMENT
-exports.create = (req, res) => {
+// CREAR LAS CITAS
+exports.create = async(req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
       message: "Contenido no puede estar vacio!"
     });
   }
-
   // Create JSON
   const escucha = new Escucha({	  
 	  id_escucha: req.body.id_escucha,
@@ -22,26 +23,68 @@ exports.create = (req, res) => {
   	se_cumplio: req.body.se_cumplio,
   	comentario: req.body.comentario,
   });
+  let volunum,dolunum,nomdol;
+  let citas = [];
+  const date = new Date(escucha.fecha);
+  escucha.fecha=date.toISOString().split('.')[0];
+  citas.push(escucha.fecha.split('T')[0]);
+  for (let i = 0; i < 3; i++) {
+    await Escucha.create(escucha, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Error al crear una escucha"
+        });
+    });
+    date.setDate(date.getDate() + 7);
+    escucha.fecha=date.toISOString().split('.')[0];
+    citas.push(escucha.fecha.split('T')[0]);
+  }
 
-  // Save in the database
-  Escucha.create(escucha, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Error al crear una escucha"
+  await Voluntario.findById(req.body.id_voluntario, async(err, data) => {
+    try{
+      volunum = "521"+data.numero_celular+"@c.us";
+      await Doliente.findById(req.body.id_doliente, async(err, data) => {
+        try{
+          dolunum = "521"+data.numero_celular+"@c.us";
+          nomdol=data.primer_nombre+" "+data.apellido_paterno;
+          //Mensaje a doliente
+          client.sendMessage(dolunum, "Hola, tus citas son los dias: "+citas+". Enviaremos mas informacion del dia de tu cita");
+          //Mensaje a voluntario
+          client.sendMessage(volunum, "Hola, tu doliente es "+nomdol+" y tu zoom sera: Join Zoom Meeting https://us05web.zoom.us/j/9631463760?pwd=aVgvZERWQXNnL256UE9BemVYbHpIdz09 Meeting ID: 963 146 3760 Passcode: Na3UWS");
+        }
+        catch{
+          console.log("Error encontrando doliente")
+        }
       });
-	  else {
-      client.sendMessage("5215540270556@c.us", "hola");
-      client.sendMessage("5215540270556@c.us", "hola");
-		  req.flash('succes','La escucha se ha guardado');
-		  res.redirect('/escucha')
-	  }
+    }
+    catch{
+      console.log("Error encontrando voluntario")
+    }
   });
+  
+  req.flash('succes','Las escuchas se han generado y se han mandado los mansajes');
+  res.redirect('/escucha')
 };
 
 // GET ALL ELEMENTS.
 exports.findAll = (req, res) => {
   Escucha.getAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Error al regresar escucha de la BD"
+      }); 
+    else {
+		// var vsession = req.session;
+		res.render('escucha/listAll',{ data });
+	}
+  });
+};
+
+// GET ALL ELEMENTS.
+exports.findAllToday = (req, res) => {
+  Escucha.getAllToday((err, data) => {
     if (err)
       res.status(500).send({
         message:
