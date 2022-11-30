@@ -1,5 +1,5 @@
 {
-  "name": "Acompana App",
+  "name": "acompana_app",
   "version": "0.0.1",
   "description": "Practicum Ing Sistemas Anahuac 2022",
   "main": "app.js",
@@ -8,6 +8,7 @@
     "start": "node app"
   },
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "body-parser": "~1.18.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",

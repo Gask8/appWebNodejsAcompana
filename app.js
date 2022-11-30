@@ -47,6 +47,8 @@ require("./routes/voluntario.routes.js")(app);
 require("./routes/doliente.routes.js")(app);
 require("./routes/escucha.routes.js")(app);
 require("./routes/horario.routes.js")(app);
+require("./routes/aporte.routes.js")(app);
+require("./routes/canalizado.routes.js")(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

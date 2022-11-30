@@ -1,0 +1,31 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Info de Aporte</h2>
+		<form method="POST" action="/aporte/<%= data.id_aporte %>?_method=PUT">
+			<div class="form-group">
+				<label for="id">Id:</label>
+				<input type="number" class="form-control" id="id" value="<%= data.id_aporte %>" disabled>
+			</div>
+			<div class="form-group">
+				<label for="idd">Id Doliente:</label>
+				<input type="number" class="form-control" id="idd" value="<%= data.id_doliente %>" name="id_doliente">
+			</div>
+			<div class="form-group">
+				<label for="cantidadAportada">Cantidad Aportada:</label>
+				<input type="number" class="form-control" id="cantidadAportada" name="cantidad_que_aporto" value="<%= data.cantidad_que_aporto %>">
+			</div>
+			<div class="form-group">
+				<label for="fechaDeposito">Fecha de depósito:</label>
+				<input type="date" class="form-control" id="fechaDeposito" name="fecha_de_deposito" value="<%= data.fecha_de_deposito.toISOString().split('T')[0] %>">
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Cambiar</button>
+		</form>
+	</div>
+	<form class="mt-2" method="POST" action="/aporte/<%= data.aporte %>?_method=DELETE" onsubmit="return confirm('En serio quieres borrar?');">
+		<button class="btn btn-danger btn-block">Borrar</button>
+	</form>
+</div>
+
+<%- include('../partials/footer')%>

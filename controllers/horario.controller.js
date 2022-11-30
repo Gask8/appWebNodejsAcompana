@@ -50,8 +50,8 @@ exports.findAll = (req, res) => {
           err.message || "Error al regresar horario de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('horario/list',{ data });
+		var vsession = req.session;
+		res.render('horario/list',{ data, vsession });
 	}
   });
 };
@@ -65,8 +65,8 @@ exports.findAllForVol = (req, res) => {
           err.message || "Error al regresar horario de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('horario/list',{ data });
+		var vsession = req.session;
+		res.render('horario/list',{ data, vsession });
 	}
   });
 };
@@ -88,7 +88,7 @@ exports.findOne = (req, res) => {
 	  // else res.send(data);
 	 else {
 		var vsession = req.session;
-		res.render('horario/byId',{ data });
+		res.render('horario/byId',{ data, vsession });
 	}
   });
 };

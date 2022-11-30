@@ -39,8 +39,8 @@ exports.findAll = (req, res) => {
           err.message || "Error al regresar celula de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('celula/list',{ data });
+		var vsession = req.session;
+		res.render('celula/list',{ data, vsession });
 	}
   });
 };
@@ -62,7 +62,7 @@ exports.findOne = (req, res) => {
 	  // else res.send(data);
 	 else {
 		var vsession = req.session;
-		res.render('celula/byId',{ data });
+		res.render('celula/byId',{ data, vsession });
 	}
   });
 };
@@ -143,8 +143,8 @@ exports.voluntariosAll = (req, res) => {
           err.message || "Error al regresar celula de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('voluntario/form',{ data });
+		var vsession = req.session;
+		res.render('voluntario/form',{ data, vsession });
 	}
   });
 };

@@ -102,8 +102,8 @@ exports.findAll = (req, res) => {
           err.message || "Error al regresar escucha de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('escucha/listAll',{ data });
+		var vsession = req.session;
+		res.render('escucha/listAll',{ data, vsession });
 	}
   });
 };
@@ -117,8 +117,8 @@ exports.findAllToday = (req, res) => {
           err.message || "Error al regresar escucha de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('escucha/list',{ data });
+		var vsession = req.session;
+		res.render('escucha/list',{ data, vsession });
 	}
   });
 };
@@ -140,7 +140,7 @@ exports.findOne = (req, res) => {
 	  // else res.send(data);
 	 else {
 		var vsession = req.session;
-		res.render('escucha/byId',{ data });
+		res.render('escucha/byId',{ data, vsession });
 	}
   });
 };

@@ -44,8 +44,8 @@ exports.findAll = (req, res) => {
           err.message || "Error al regresar voluntario de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('voluntario/list',{ data });
+		var vsession = req.session;
+		res.render('voluntario/list',{ data, vsession });
 	}
   });
 };
@@ -67,7 +67,7 @@ exports.findOne = (req, res) => {
 	  // else res.send(data);
 	 else {
 		var vsession = req.session;
-		res.render('voluntario/byId',{ data });
+		res.render('voluntario/byId',{ data, vsession });
 	}
   });
 };
@@ -148,8 +148,8 @@ exports.horariosAll = (req, res) => {
           err.message || "Error al regresar horario de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('horario/form',{ data });
+		var vsession = req.session;
+		res.render('horario/form',{ data, vsession });
 	}
   });
 };

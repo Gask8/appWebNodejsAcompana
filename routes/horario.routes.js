@@ -2,18 +2,27 @@ module.exports = app => {
 	const horario = require("../controllers/horario.controller.js");
 	const voluntario = require("../controllers/voluntario.controller.js");
 	const express = require('express');
+
+	const isLogIn = (req, res, next) => {
+		if(req.session.email == undefined){
+			req.flash('wrong','Debe Ingresar como Usuario')
+			return res.redirect('/')
+		}
+		next();
+	}
+
 	const router = express.Router();
 	app.use('/horario', router);
 
 
 	// ALL Get
-	router.get("/", horario.findAll);
+	router.get("/", isLogIn, horario.findAll);
 
 	// NEW Get
-	router.get('/nuevo', voluntario.horariosAll);
+	router.get('/nuevo', isLogIn, voluntario.horariosAll);
 
 	// ALL Get for Voluntarisos
-	router.get("/voluntarios/:id", horario.findAllForVol);
+	router.get("/voluntarios/:id", isLogIn, horario.findAllForVol);
 	
 	// NEW Post
 	router.post('/', horario.create);
@@ -22,7 +31,7 @@ module.exports = app => {
 	router.delete("/", horario.deleteAll);
 	
 	// ByID GET
-	router.get("/:id", horario.findOne);
+	router.get("/:id", isLogIn, horario.findOne);
 	
 	// ByID PUT
 	router.put("/:id", horario.update);

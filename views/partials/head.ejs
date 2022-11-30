@@ -20,7 +20,7 @@
 	<a class="navbar-brand" href="/" style="background: white">
 		<img src="https://acompana.org/wp-content/uploads/2020/02/logo-Acompan%CC%83a_horizontal-copy-2.png" alt="logo" style="width:100px;">
 	</a>
-  <ul class="navbar-nav">
+  <ul class="navbar-nav mr-auto">
     <li class="nav-item active">
       <a class="nav-link" href="/">Acompaña App</a>
     </li>
@@ -37,6 +37,16 @@
       <a class="nav-link" href="/escucha">Escuchas</a>
     </li>
   </ul>
+  <ul class="navbar-nav">
+	<%if (vsession.email==undefined){%>
+	<li class="nav-item active" >
+		<a class="nav-link" href="/login">Log In</a>
+	</li>
+	<%} else {%>
+  	<li class="nav-item"><a href="#">Usuario: <%=vsession.email%></a></li>
+	<li class="nav-item"><a style="color: #ffff;" href="/logout">Log Out</a></li>
+	<%}%>
+</ul>
 </nav>
 	
 	<div class="container">

@@ -1,4 +1,5 @@
 module.exports = app => {
+	const canalizado = require("../controllers/canalizado.controller.js");
 	const doliente = require("../controllers/doliente.controller.js");
 	const express = require('express');
 
@@ -11,27 +12,27 @@ module.exports = app => {
 	}
 
 	const router = express.Router();
-	app.use('/doliente', router);
+	app.use('/canalizado', router);
 
 	// ALL Get
-	router.get("/", isLogIn, doliente.findAll);
+	router.get("/", isLogIn, canalizado.findAll);
 
 	// NEW Get
-	router.get("/nuevo", isLogIn, doliente.findAllNew);
-
+	router.get('/nuevo', isLogIn, doliente.canalizadosAll);
+	
 	// NEW Post
-	router.post('/', doliente.create);
+	router.post('/', canalizado.create);
 	
 	// ALL Delete
-	router.delete("/", doliente.deleteAll);
+	router.delete("/", canalizado.deleteAll);
 	
 	// ByID GET
-	router.get("/:id", isLogIn, doliente.findOne);
+	router.get("/:id", isLogIn, canalizado.findOne);
 	
 	// ByID PUT
-	router.put("/:id", doliente.update);
+	router.put("/:id", canalizado.update);
 
 	// ByID DELETE
-	router.delete("/:id", doliente.delete);
+	router.delete("/:id", canalizado.delete);
 
 };

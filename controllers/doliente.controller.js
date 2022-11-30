@@ -57,8 +57,8 @@ exports.findAll = (req, res) => {
           err.message || "Error al regresar doliente de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('doliente/list',{ data });
+		var vsession = req.session;
+		res.render('doliente/list',{ data, vsession });
 	}
   });
 };
@@ -71,8 +71,8 @@ exports.findAllNew = (req, res) => {
           err.message || "Error al regresar doliente de la BD"
       }); 
     else {
-		// var vsession = req.session;
-		res.render('doliente/listNew',{ data });
+		var vsession = req.session;
+		res.render('doliente/listNew',{ data, vsession });
 	}
   });
 };
@@ -94,7 +94,7 @@ exports.findOne = (req, res) => {
 	  // else res.send(data);
 	 else {
 		var vsession = req.session;
-		res.render('doliente/byId',{ data });
+		res.render('doliente/byId',{ data, vsession });
 	}
   });
 };
@@ -187,10 +187,41 @@ exports.dolientesVoluntariosAll = (req, res) => {
           id: req.query.id_doliente || null,
           name: (req.query.name+" "+req.query.lastname) || null,
         }
-				// var vsession = req.session;
-				res.render('escucha/form',{ data, data2, data3 });
+				var vsession = req.session;
+				res.render('escucha/form',{ data, data2, data3, vsession });
 			}
 	  	});
+	}
+  });
+};
+
+// GET ALL - FOR APORTE FORM
+exports.aportesAll = (req, res) => {
+  Doliente.getAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Error al regresar doliente de la BD"
+      }); 
+    else {
+		var vsession = req.session;
+		res.render('aporte/form',{ data, vsession });
+	}
+  });
+};
+
+
+// GET ALL - FOR CANALIZADO FORM
+exports.canalizadosAll = (req, res) => {
+  Doliente.getAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Error al regresar doliente de la BD"
+      }); 
+    else {
+		var vsession = req.session;
+		res.render('canalizado/form',{ data, vsession });
 	}
   });
 };
