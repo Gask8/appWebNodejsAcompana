@@ -1,17 +1,24 @@
 <%- include('../partials/head')%>
 <script src="/scripts/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+
 
 <div class="container mt-5">
 	<h1>Horarios</h1>
-	<br>
+		<div class="jumbotron">
+			<div></div>
+			<div id='calendar'></div>
+		</div>
+
+		<br>
 	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
 	<br>
 	<div class="container">
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>ID Voluntario</th>
+					<th>Dia de la Semana</th>
 					<th>Hora Comienzo</th>
 					<th>Hora Término</th>
 				</tr>
@@ -19,19 +26,70 @@
 			<tbody id="myTable">
 				<%for (let element of data) {%>
 				<tr>
-					<td><a href="/horario/<%=element.id_horario%>"><%= element.id_horario %></a></td>
-					<td><%= element.id_voluntario %></td>
+					<td><%= element.dia_semana %></td>
 					<td><%= element.hora_comienzo %></td>
 					<td><%= element.hora_termino %></td>
 				</tr>
 				<%}%>
 			</tbody>
 		</table>
+
 		<a href="/horario/nuevo" class="btn btn-primary btn-block">Crear</a>
 		<form class="mt-2" method="POST" action="/horario?_method=DELETE" onsubmit="return confirm('En serio quieres borrar todo?');">
 			<button class="btn btn-danger btn-block">Borrar Todo</button>
 		</form>
 	</div>
 </div>
+
+
+<% function verD(diaSemana){
+	switch(diaSemana){
+		case "domingo":
+			return 0;
+		case "lunes":
+			return 1;
+		case "martes":
+			return 2;
+		case "miercoles":
+			return 3;
+		case "jueves":
+			return 4;
+		case "viernes":
+			return 5;
+		case "sabado":
+			return 6;
+	}
+}%>
+<script>
+	var listevent = [
+		<%for (let e of data) {%>
+			{
+				title: 'Horario',
+				startTime: '<%= e.hora_comienzo %>', 
+				endTime: '<%= e.hora_termino %>',
+				daysOfWeek: [<%= verD(e.dia_semana)%>]
+			},
+		<%}%>
+	];
+
+	document.addEventListener('DOMContentLoaded', function() {
+	  var calendarEl = document.getElementById('calendar');
+	  var calendar = new FullCalendar.Calendar(calendarEl, {
+		initialView: 'dayGridWeek',
+		locale: 'es',
+		height: 250,
+		events: listevent,
+		eventDisplay: 'block',
+		displayEventEnd: 'true',
+		eventBackgroundColor: '#626eff',
+		eventTimeFormat: { // like '14:30:00'
+			hour: '2-digit',
+			minute: '2-digit',
+			meridiem: false
+		}
+	  });
+	  calendar.render();
+	});
+</script>
 
 <%- include('../partials/footer')%>

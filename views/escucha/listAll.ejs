@@ -15,6 +15,7 @@
 					<th>Doliente</th>
 					<th>Voluntario</th>
 					<th>Fecha</th>
+					<th>Hora</th>
 				</tr>
 			</thead>
 			<tbody id="myTable">
@@ -24,6 +25,7 @@
 					<td><%= element.primer_nombre %> <%= element.apellido_paterno %></td>
 					<td><%= element.nombre %> <%= element.apellido %></td>
 					<td><%= element.fecha.toISOString().split('T')[0] %></td>
+					<td><%= element.fecha.toISOString().split('T')[1].split('.')[0] %></td>
 				</tr>
 				<%}%>
 			</tbody>
