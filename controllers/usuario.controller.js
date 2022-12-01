@@ -50,39 +50,39 @@ exports.findOne = (req, res) => {
       } 
         else {
 
-          // bcrypt.compare(user.password, data.password, async function (err, isMatch) {
-          //     if (err) {
-          //       console.log(err);
-          //     }
-          //     // Comparing the original password to
-          //     // encrypted password   
-          //     if (isMatch) {
+          bcrypt.compare(user.password, data.password, async function (err, isMatch) {
+              if (err) {
+                console.log(err);
+              }
+              // Comparing the original password to
+              // encrypted password   
+              if (isMatch) {
 
-          //       req.session.id = data.id_usuario;
-          //       req.session.email = data.email;
-          //       req.flash('success','Bienvenido')
-          //       res.redirect('/')
-
-          //     }
-
-          //     if (!isMatch) {
-          //         req.flash('wrong','Usuario o contrasena mala')
-          //         res.redirect('/')
-          //     }
-          //   })
-
-            if(data.password==user.password){
                 req.session.id = data.id_usuario;
                 req.session.email = data.email;
-                
                 req.flash('success','Bienvenido')
                 res.redirect('/')
 
+              }
+
+              if (!isMatch) {
+                  req.flash('wrong','Usuario o contrasena mala')
+                  res.redirect('/')
+              }
+            })
+
+            // if(data.password==user.password){
+            //     req.session.id = data.id_usuario;
+            //     req.session.email = data.email;
+                
+            //     req.flash('success','Bienvenido')
+            //     res.redirect('/')
+
   
-            } else {
-                req.flash('wrong','Usuario o contrasena mala')
-                res.redirect('/')
-            }
+            // } else {
+            //     req.flash('wrong','Usuario o contrasena mala')
+            //     res.redirect('/')
+            // }
         }
     });
 };

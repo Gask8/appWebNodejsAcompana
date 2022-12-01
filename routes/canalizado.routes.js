@@ -1,24 +1,17 @@
 module.exports = app => {
 	const canalizado = require("../controllers/canalizado.controller.js");
 	const doliente = require("../controllers/doliente.controller.js");
+	const mw = require("./middelware.js");
+	
 	const express = require('express');
-
-	const isLogIn = (req, res, next) => {
-		if(req.session.email == undefined){
-			req.flash('wrong','Debe Ingresar como Usuario')
-			return res.redirect('/')
-		}
-		next();
-	}
-
 	const router = express.Router();
-	app.use('/canalizado', router);
+	app.use('/canalizado', mw.isLogIn, router);
 
 	// ALL Get
-	router.get("/", isLogIn, canalizado.findAll);
+	router.get("/", canalizado.findAll);
 
 	// NEW Get
-	router.get('/nuevo', isLogIn, doliente.canalizadosAll);
+	router.get('/nuevo', doliente.canalizadosAll);
 	
 	// NEW Post
 	router.post('/', canalizado.create);
@@ -27,7 +20,7 @@ module.exports = app => {
 	router.delete("/", canalizado.deleteAll);
 	
 	// ByID GET
-	router.get("/:id", isLogIn, canalizado.findOne);
+	router.get("/:id", canalizado.findOne);
 	
 	// ByID PUT
 	router.put("/:id", canalizado.update);

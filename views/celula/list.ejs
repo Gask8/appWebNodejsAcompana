@@ -18,9 +18,9 @@
 			<tbody id="myTable">
 				<%for (let element of data) {%>
 				<tr>
-					<td><%= element.id_celula %></td>
+					<td style="background-color: <%= element.color %>;"><%= element.id_celula %></td>
 					<td><a href="/celula/<%=element.id_celula%>"><%= element.nombre_celula %></a></td>
-					<td><%= element.id_lider %></td>
+					<td><%= element.nombre_lider %></td>
 				</tr>
 				<%}%>
 			</tbody>

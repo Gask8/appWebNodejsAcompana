@@ -1,24 +1,17 @@
 module.exports = app => {
 	const voluntario = require("../controllers/voluntario.controller.js");
 	const celula = require("../controllers/celula.controller.js");
+	const mw = require("./middelware.js");
+	
 	const express = require('express');
-
-	const isLogIn = (req, res, next) => {
-		if(req.session.email == undefined){
-			req.flash('wrong','Debe Ingresar como Usuario')
-			return res.redirect('/')
-		}
-		next();
-	}
-
 	const router = express.Router();
-	app.use('/voluntario', router);
+	app.use('/voluntario', mw.isLogIn, router);
 
 	// ALL Get
-	router.get("/", isLogIn, voluntario.findAll);
+	router.get("/", voluntario.findAll);
 
 	// NEW Get
-	router.get('/nuevo', isLogIn, celula.voluntariosAll);
+	router.get('/nuevo', celula.voluntariosAll);
 	
 	// NEW Post
 	router.post('/', voluntario.create);
@@ -27,7 +20,7 @@ module.exports = app => {
 	router.delete("/", voluntario.deleteAll);
 	
 	// ByID GET
-	router.get("/:id", isLogIn, voluntario.findOne);
+	router.get("/:id", voluntario.findOne);
 	
 	// ByID PUT
 	router.put("/:id", voluntario.update);

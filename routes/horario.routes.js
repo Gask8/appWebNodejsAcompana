@@ -1,28 +1,21 @@
 module.exports = app => {
 	const horario = require("../controllers/horario.controller.js");
 	const voluntario = require("../controllers/voluntario.controller.js");
+	const mw = require("./middelware.js");
+	
 	const express = require('express');
-
-	const isLogIn = (req, res, next) => {
-		if(req.session.email == undefined){
-			req.flash('wrong','Debe Ingresar como Usuario')
-			return res.redirect('/')
-		}
-		next();
-	}
-
 	const router = express.Router();
-	app.use('/horario', router);
+	app.use('/horario', mw.isLogIn, router);
 
 
 	// ALL Get
-	router.get("/", isLogIn, horario.findAll);
+	router.get("/", horario.findAll);
 
 	// NEW Get
-	router.get('/nuevo', isLogIn, voluntario.horariosAll);
+	router.get('/nuevo', voluntario.horariosAll);
 
 	// ALL Get for Voluntarisos
-	router.get("/voluntarios/:id", isLogIn, horario.findAllForVol);
+	router.get("/voluntarios/:id", horario.findAllForVol);
 	
 	// NEW Post
 	router.post('/', horario.create);
@@ -31,7 +24,7 @@ module.exports = app => {
 	router.delete("/", horario.deleteAll);
 	
 	// ByID GET
-	router.get("/:id", isLogIn, horario.findOne);
+	router.get("/:id", horario.findOne);
 	
 	// ByID PUT
 	router.put("/:id", horario.update);

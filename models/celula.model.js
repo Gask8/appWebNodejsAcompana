@@ -4,7 +4,8 @@ const sql = require("../config/db.js");
 const Celula = function(celula) {
   this.id_celula = celula.id_celula
   this.nombre_celula = celula.nombre_celula;
-  this.id_lider = celula.id_lider;
+  this.nombre_lider = celula.nombre_lider;
+  this.color = celula.color;
 };
 
 Celula.create = (newCelula, result) => {
@@ -52,8 +53,8 @@ Celula.getAll = result => {
 
 Celula.updateById = (id_celula, celula, result) => {
   sql.query(
-    "UPDATE celula SET nombre_celula = ?, id_lider = ? WHERE id_celula = ?",
-    [celula.nombre_celula, celula.id_lider, id_celula],
+    "UPDATE celula SET nombre_celula = ?, nombre_lider = ?, color = ? WHERE id_celula = ?",
+    [celula.nombre_celula, celula.nombre_lider, celula.color, id_celula],
     (err, res) => {
       if (err) {
         console.log("Error: ", err);

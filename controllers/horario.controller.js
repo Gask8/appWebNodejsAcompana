@@ -8,9 +8,7 @@ exports.create = (req, res) => {
       message: "Contenido no puede estar vacio!"
     });
   }
-
   console.log(req.body)
-
   var cantidadHorarios = req.body.horariosCantidad;
   var i;
   
@@ -31,11 +29,14 @@ exports.create = (req, res) => {
 
 	  // Save in the database
 	  Horario.create(horario, (err, data) => {
-		
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Error al crear un horario"
+        });
 	  });
 
 	}
-	
 	req.flash('succes','El horario se ha guardado');
 	res.redirect('/horario')
 	
@@ -66,7 +67,8 @@ exports.findAllForVol = (req, res) => {
       }); 
     else {
 		var vsession = req.session;
-		res.render('horario/list',{ data, vsession });
+    var idVoluntas = req.params.id;
+		res.render('horario/listById',{ data, vsession, idVoluntas });
 	}
   });
 };

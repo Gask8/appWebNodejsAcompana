@@ -53,7 +53,7 @@ Horario.getAll = result => {
 };
 
 Horario.getAllForAllVol = result => {
-  sql.query("SELECT v.id_voluntario, hora_comienzo, hora_termino, dia_semana, nombre, apellido, id_celula FROM horario h, voluntario v WHERE h.id_voluntario=v.id_voluntario;", (err, res) => {
+  sql.query("SELECT v.id_voluntario, hora_comienzo, hora_termino, dia_semana, nombre, apellido, color FROM horario h, voluntario v, celula c WHERE h.id_voluntario=v.id_voluntario AND v.id_celula=c.id_celula;", (err, res) => {
     if (err) {
       console.log("Error: ", err);
       result(null, err);

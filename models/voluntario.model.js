@@ -44,7 +44,7 @@ Voluntario.findById = (id, result) => {
 };
 	
 Voluntario.getAll = result => {
-  sql.query("SELECT * FROM voluntario", (err, res) => {
+  sql.query("SELECT * FROM voluntario v, celula c WHERE v.id_celula = c.id_celula", (err, res) => {
     if (err) {
       console.log("Error: ", err);
       result(null, err);

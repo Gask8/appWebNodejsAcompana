@@ -5,19 +5,20 @@
 	<div class="jumbotron mt-5">
 		<h2>Formulario de Horario</h2>
 		<form method="POST" action="/horario">
-			<!-- <div class="form-group">
-				<label for="id">Id:</label>
-				<input type="number" class="form-control" id="id" placeholder="Escribir ID" name="id">
-			</div> -->
-			<div class="form-group">
-				<label for="idVoluntario">Id voluntario:</label>
-				<select name="id_voluntario" id="idVoluntario" class="form-control">
-					<option disabled selected value> -- Elije un Voluntario -- </option>
-					<%for (let element of data) {%>
-						<option value="<%=element.id_voluntario%>"><%= element.id_voluntario %></option>
-					<%}%>
-				</select>
-			</div>
+			<%if(urlquery.id!=null){%>
+				<input type="hidden" name="id_voluntario" value="<%=urlquery.id%>">
+			<%} else {%>
+				<div class="form-group">
+					<label for="idVoluntario">Voluntario:</label>
+					<select name="id_voluntario" id="idVoluntario" class="form-control">
+						<option disabled selected value> -- Elije un Voluntario -- </option>
+						<%for (let element of data) {%>
+							<option value="<%=element.id_voluntario%>"><%= element.nombre + " " + element.apellido%></option>
+						<%}%>
+					</select>
+				</div>
+			<%}%>
+
 			<div class="form-group">
 					<label for="horariosCantidad">Cantidad de horarios:</label>
 					<input type="number" class="form-control" id="horariosCantidad" name="horariosCantidad" 

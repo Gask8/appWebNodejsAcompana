@@ -11,9 +11,10 @@ exports.create = (req, res) => {
 
   // Create JSON
   const celula = new Celula({
-	id_celula: req.body.id_celula,
+	  id_celula: req.body.id_celula,
     nombre_celula: req.body.nombre_celula,
-    id_lider: req.body.id_lider,  
+    nombre_lider: req.body.nombre_lider,
+    color: req.body.color,
   });
 
   // Save in the database

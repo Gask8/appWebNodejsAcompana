@@ -2,10 +2,10 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
 <style>
-	.fc-event-time, .fc-event-title {
+	/* .fc-event-time, .fc-event-title {
 	padding: 0 1px;
 	white-space: normal;
-	}
+	} */
 	.fc-timegrid-event-harness{
 		cursor: pointer;
 		margin-right: 8%;
@@ -20,11 +20,11 @@
 				<label for="id">Id:</label>
 				<input type="number" class="form-control" id="id" placeholder="Escribir ID" name="id">
 			</div> -->
-			<%if(data3.id!=null){%>
+			<%if(urlquery.id!=null){%>
 				<div class="form-group">
 					<label for="idDoliente">Doliente:</label>
-					<input type="text" class="form-control" id="idDoliente" value="<%=data3.name%>" disabled>
-					<input type="hidden" name="id_doliente" value="<%=data3.id%>">
+					<input type="text" class="form-control" id="idDoliente" value="<%=urlquery.name%>" disabled>
+					<input type="hidden" name="id_doliente" value="<%=urlquery.id%>">
 				</div>
 			<%} else {%>
 				<div class="form-group">
@@ -93,7 +93,7 @@
 }%>
 <script>
 	var listevent = [
-		<%for (let e of data4) {%>
+		<%for (let e of data3) {%>
 			{
 				title: '<%= e.nombre + " " + e.apellido%>',
 				startTime: '<%= e.hora_comienzo %>', 
@@ -102,15 +102,22 @@
 				extendedProps: {
 					idVoluntario: '<%= e.id_voluntario %>'
 				},
+				color: '<%console.log(e);%><%= e.color %>',
 			},
 		<%}%>
 	];
 	var select = document.querySelector('#idVoluntario')
 	var fecha = document.querySelector('#fecha')
+	var fin = document.querySelector('#horaTermino')
 
 	document.addEventListener('DOMContentLoaded', function() {
 	  var calendarEl = document.getElementById('calendar');
 	  var calendar = new FullCalendar.Calendar(calendarEl, {
+		headerToolbar: {
+			left: 'today',
+			center: 'title',
+			right: 'timeGridWeek,timeGridDay,prev,next'
+		},
 		initialView: 'timeGridWeek',
 		locale: 'es',
 		height: 400,
@@ -118,19 +125,23 @@
 		events: listevent,
 		eventDisplay: 'block',
 		displayEventEnd: 'true',
-		eventBackgroundColor: '#626eff',
 		eventTimeFormat: { // like '14:30:00'
 			hour: '2-digit',
 			minute: '2-digit',
 			meridiem: false
 		},
 		eventClick: function(info) {
-			select.value = info.event.extendedProps.idVoluntario
+			select.value = info.event.extendedProps.idVoluntario;
+			console.log(info.event)
 		},
 		dateClick: function(info) {
-			//alert('Clicked on: ' + info.dateStr);
-			console.log(info.dateStr.substring(0, 19))
-			fecha.value = info.dateStr.substring(0, 19)
+			fecha.value = info.dateStr.substring(0, 19);
+			fin.value = new Date(new Date(info.dateStr.substring(0, 19)).getTime() + 60*60000).toLocaleTimeString().split(" ")[0];
+		},
+		eventRender: function (event, element, view) {
+		if (event.color) {
+			element.css('background-color', event.color)
+		}
 		}
 	  });
 	  

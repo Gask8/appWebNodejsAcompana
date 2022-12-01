@@ -12,13 +12,13 @@ exports.create = (req, res) => {
   // Create JSON
   const voluntario = new Voluntario({
     id_voluntario: req.body.id_voluntario,
-	id_celula: req.body.id_celula,
-	nombre: req.body.nombre,
-	apellido: req.body.apellido,
-	numero_celular: req.body.numero_celular,
-	fecha_nacimiento: req.body.fecha_nacimiento,
-	correo: req.body.correo,
-	ciudad_pais: req.body.ciudad_pais,
+    id_celula: req.body.id_celula,
+    nombre: req.body.nombre,
+    apellido: req.body.apellido,
+    numero_celular: req.body.numero_celular,
+    fecha_nacimiento: req.body.fecha_nacimiento,
+    correo: req.body.correo,
+    ciudad_pais: req.body.ciudad_pais,
   });
 
   // Save in the database
@@ -149,7 +149,11 @@ exports.horariosAll = (req, res) => {
       }); 
     else {
 		var vsession = req.session;
-		res.render('horario/form',{ data, vsession });
+    var urlquery = {
+      id: req.query.id_voluntario || null,
+      name: (req.query.name+" "+req.query.lastname) || null,
+    }
+		res.render('horario/form',{ data, vsession, urlquery });
 	}
   });
 };

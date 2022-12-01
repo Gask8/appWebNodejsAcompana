@@ -100,7 +100,7 @@ exports.findOne = (req, res) => {
   });
 };
 
-// UPDATRE BY ID
+// UPDATE BY ID
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
@@ -185,20 +185,20 @@ exports.dolientesVoluntariosAll = (req, res) => {
 			  }); 
 			else {
 
-        Horario.getAllForAllVol((err4, data4) => {
-          if (err4)
+        Horario.getAllForAllVol((err3, data3) => {
+          if (err3)
             res.status(500).send({
             message:
             err2.message || "Error al regresar horarios de la BD"
             }); 
           else {
 
-            var data3 = {
+            var urlquery = {
               id: req.query.id_doliente || null,
               name: (req.query.name+" "+req.query.lastname) || null,
             }
             var vsession = req.session;
-            res.render('escucha/form',{ data, data2, data4, data3, vsession });
+            res.render('escucha/form',{ data, data2, data3, urlquery, vsession });
 
           }
 

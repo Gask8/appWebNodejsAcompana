@@ -15,6 +15,7 @@
 					<th>Nombre</th>
 					<th>Edad</th>
 					<th>Celular</th>
+					<th>Preferencia</th>
 					<th>Assignar<br>Voluntario</th>
 				</tr>
 			</thead>
@@ -25,6 +26,7 @@
 					<td><a href="/doliente/<%=element.id_doliente%>"><%= element.primer_nombre %> <%= element.apellido_paterno %></a></td>
 					<td><%= element.edad %></td>
 					<td><%= element.numero_celular %></td>
+					<td><%= element.preferencia_de_horario.toUpperCase() %></td>
 					<td><a href="/escucha/nuevo?id_doliente=<%=element.id_doliente%>&name=<%= element.primer_nombre %>&lastname=<%= element.apellido_paterno %>" class="btn btn-primary btn-block">Asignar</a></td>
 				</tr>
 				<%}%>

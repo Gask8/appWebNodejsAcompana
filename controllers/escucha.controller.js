@@ -43,10 +43,10 @@ exports.create = async(req, res) => {
 
   await Voluntario.findById(req.body.id_voluntario, async(err, data) => {
     try{
-      volunum = "521"+data.numero_celular+"@c.us";
+      volunum = "52"+data.numero_celular+"@c.us";
       await Doliente.findById(req.body.id_doliente, async(err, data) => {
         try{
-          dolunum = "521"+data.numero_celular+"@c.us";
+          dolunum = "52"+data.numero_celular+"@c.us";
           nomdol=data.primer_nombre+" "+data.apellido_paterno;
           //Mensaje a doliente
           client.sendMessage(dolunum, "Hola, tus citas son los dias: "+citas+". Enviaremos mas informacion del dia de tu cita");
@@ -74,8 +74,8 @@ exports.reminder = async(req, res) => {
   await Escucha.getAllToday(async(err, data) => {
     try{
       for (let element of data) {
-        let volnum = "521"+element.numvol+"@c.us";
-        let dolunum = "521"+element.numdol+"@c.us";
+        let volnum = "52"+element.numvol+"@c.us";
+        let dolunum = "52"+element.numdol+"@c.us";
         let nomdol=element.primer_nombre+" "+element.apellido_paterno;
         let hoy = element.fecha.toISOString().split('T')[0];
         //Mensaje a doliente
