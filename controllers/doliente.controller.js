@@ -1,5 +1,6 @@
 const Doliente = require("../models/doliente.model.js");
 const Voluntario = require("../models/voluntario.model.js");
+const Horario = require("../models/horario.model.js");
 const SerQ = require("../models/ser_querido.model.js");
 
 // CREATE ELEMENT
@@ -183,12 +184,25 @@ exports.dolientesVoluntariosAll = (req, res) => {
 				  err2.message || "Error al regresar voluntario de la BD"
 			  }); 
 			else {
-        var data3 = {
-          id: req.query.id_doliente || null,
-          name: (req.query.name+" "+req.query.lastname) || null,
-        }
-				var vsession = req.session;
-				res.render('escucha/form',{ data, data2, data3, vsession });
+
+        Horario.getAllForAllVol((err4, data4) => {
+          if (err4)
+            res.status(500).send({
+            message:
+            err2.message || "Error al regresar horarios de la BD"
+            }); 
+          else {
+
+            var data3 = {
+              id: req.query.id_doliente || null,
+              name: (req.query.name+" "+req.query.lastname) || null,
+            }
+            var vsession = req.session;
+            res.render('escucha/form',{ data, data2, data4, data3, vsession });
+
+          }
+
+        })
 			}
 	  	});
 	}

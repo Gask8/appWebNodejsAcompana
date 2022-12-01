@@ -6,12 +6,12 @@
 
 <div class="container mt-5">
 	<h1>Horarios</h1>
-		<div class="jumbotron">
-			<div></div>
-			<div id='calendar'></div>
-		</div>
+	<div class="jumbotron">
+		<div></div>
+		<div id='calendar'></div>
+	</div>
 
-		<br>
+	<br>
 	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
 	<br>
 	<div class="container">
@@ -44,20 +44,13 @@
 
 <% function verD(diaSemana){
 	switch(diaSemana){
-		case "domingo":
-			return 0;
-		case "lunes":
-			return 1;
-		case "martes":
-			return 2;
-		case "miercoles":
-			return 3;
-		case "jueves":
-			return 4;
-		case "viernes":
-			return 5;
-		case "sabado":
-			return 6;
+		case "domingo":return 0;
+		case "lunes":return 1;
+		case "martes":return 2;
+		case "miercoles":return 3;
+		case "jueves":return 4;
+		case "viernes":return 5;
+		case "sabado":return 6;
 	}
 }%>
 <script>

@@ -1,4 +1,16 @@
 <%- include('../partials/head')%>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+<style>
+	.fc-event-time, .fc-event-title {
+	padding: 0 1px;
+	white-space: normal;
+	}
+	.fc-timegrid-event-harness{
+		cursor: pointer;
+		margin-right: 8%;
+	}
+</style>
 
 <div class="container">
 	<div class="jumbotron mt-5">
@@ -10,13 +22,13 @@
 			</div> -->
 			<%if(data3.id!=null){%>
 				<div class="form-group">
-					<label for="idDoliente">Id doliente:</label>
+					<label for="idDoliente">Doliente:</label>
 					<input type="text" class="form-control" id="idDoliente" value="<%=data3.name%>" disabled>
 					<input type="hidden" name="id_doliente" value="<%=data3.id%>">
 				</div>
 			<%} else {%>
 				<div class="form-group">
-					<label for="idDoliente">Id doliente:</label>
+					<label for="idDoliente">Doliente:</label>
 					<select name="id_doliente" id="idDoliente" class="form-control">
 						<option disabled selected value> -- Elije un Doliente -- </option>
 						<%for (let element of data) {%>
@@ -25,8 +37,14 @@
 					</select>
 				</div>
 			<%}%>
+
+			<div class="jumbotron" style="background-color: #f7f7f7;">
+				<div></div>
+				<div id='calendar'></div>
+			</div>
+
 			<div class="form-group">
-				<label for="idVoluntario">Id voluntario:</label>
+				<label for="idVoluntario">Voluntario:</label>
 				<select name="id_voluntario" id="idVoluntario" class="form-control">
 					<option disabled selected value> -- Elije un Voluntario -- </option>
 					<%for (let element2 of data2) {%>
@@ -61,5 +79,64 @@
 		</form>
 	</div>
 </div>
+
+<% function verD(diaSemana){
+	switch(diaSemana){
+		case "domingo":return 0;
+		case "lunes":return 1;
+		case "martes":return 2;
+		case "miercoles":return 3;
+		case "jueves":return 4;
+		case "viernes":return 5;
+		case "sabado":return 6;
+	}
+}%>
+<script>
+	var listevent = [
+		<%for (let e of data4) {%>
+			{
+				title: '<%= e.nombre + " " + e.apellido%>',
+				startTime: '<%= e.hora_comienzo %>', 
+				endTime: '<%= e.hora_termino %>',
+				daysOfWeek: [<%= verD(e.dia_semana)%>],
+				extendedProps: {
+					idVoluntario: '<%= e.id_voluntario %>'
+				},
+			},
+		<%}%>
+	];
+	var select = document.querySelector('#idVoluntario')
+	var fecha = document.querySelector('#fecha')
+
+	document.addEventListener('DOMContentLoaded', function() {
+	  var calendarEl = document.getElementById('calendar');
+	  var calendar = new FullCalendar.Calendar(calendarEl, {
+		initialView: 'timeGridWeek',
+		locale: 'es',
+		height: 400,
+		allDaySlot: false,
+		events: listevent,
+		eventDisplay: 'block',
+		displayEventEnd: 'true',
+		eventBackgroundColor: '#626eff',
+		eventTimeFormat: { // like '14:30:00'
+			hour: '2-digit',
+			minute: '2-digit',
+			meridiem: false
+		},
+		eventClick: function(info) {
+			select.value = info.event.extendedProps.idVoluntario
+		},
+		dateClick: function(info) {
+			//alert('Clicked on: ' + info.dateStr);
+			console.log(info.dateStr.substring(0, 19))
+			fecha.value = info.dateStr.substring(0, 19)
+		}
+	  });
+	  
+	  calendar.render();
+	});
+</script>
+
 
 <%- include('../partials/footer')%>

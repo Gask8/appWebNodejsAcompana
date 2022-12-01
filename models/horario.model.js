@@ -52,6 +52,18 @@ Horario.getAll = result => {
   });
 };
 
+Horario.getAllForAllVol = result => {
+  sql.query("SELECT v.id_voluntario, hora_comienzo, hora_termino, dia_semana, nombre, apellido, id_celula FROM horario h, voluntario v WHERE h.id_voluntario=v.id_voluntario;", (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(null, err);
+      return;
+    }
+	  console.log("horarios encontrados",res);
+	  result(null, res);
+  });
+};
+
 Horario.getAllForVol = (id_voluntario, result) => {
   sql.query("SELECT * FROM horario WHERE id_voluntario = ?", [id_voluntario],(err, res) => {
     if (err) {
