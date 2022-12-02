@@ -1,9 +1,15 @@
 <%- include('../partials/head')%>
 <script src="/scripts/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
 
 <div class="container mt-5">
 	<a href="/escucha" class="btn btn-info">Escuchas de Hoy</a>
-	<h1>Escuchas</h1>
+	<h1>Todas las Escuchas</h1>
+	<div class="jumbotron" style="background-color: #f7f7f7;">
+		<div></div>
+		<div id='calendar'></div>
+	</div>
 	<br>
 	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
 	<br>
@@ -37,6 +43,37 @@
 	</div>
 </div>
 
-<!-- <a aria-label="Chat on WhatsApp" href="https://wa.me/525559175602?text=Compra%20una%20quesadilla">WhatsApp</a> -->
+
+<script>
+	var listevent = [
+		<%for (let e of data) {%>
+			{
+				title: '<%= e.primer_nombre + " " + e.apellido_paterno%>',
+				start: '<%= e.fecha.toISOString().substring(0, 10) %>',
+				url: '/escucha/<%= e.id_escucha%>'
+			},
+		<%}%>
+	];
+
+	document.addEventListener('DOMContentLoaded', function() {
+	  var calendarEl = document.getElementById('calendar');
+	  var calendar = new FullCalendar.Calendar(calendarEl, {
+		initialView: 'dayGridMonth',
+		locale: 'es',
+		height: 400,
+		allDaySlot: false,
+		events: listevent,
+		eventDisplay: 'block',
+		displayEventEnd: 'true',
+		eventTimeFormat: { // like '14:30:00'
+			hour: '2-digit',
+			minute: '2-digit',
+			meridiem: false
+		},
+	  });
+	  
+	  calendar.render();
+	});
+</script>
 
 <%- include('../partials/footer')%>

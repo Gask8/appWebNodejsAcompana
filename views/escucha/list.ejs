@@ -1,9 +1,19 @@
 <%- include('../partials/head')%>
 <script src="/scripts/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
 
 <div class="container mt-5">
-	<a href="/escucha/todas" class="btn btn-info">Todas las Escuchas</a>
-	<h1>Escuchas</h1>
+	<a href="/escucha/todas" class="btn btn-info mb-3">Todas las Escuchas</a>
+	<h1>Escuchas de Hoy</h1>
+	<form class="mt-2" method="POST" action="/escucha/reminder" onsubmit="return confirm('Quieres Mandar los Recordatorios');">
+		<button class="btn btn-success btn-block">Mandar Recordatorios</button>
+	</form>
+	<div class="jumbotron" style="background-color: #f7f7f7;">
+		<div></div>
+		<div id='calendar'></div>
+	</div>
+
 	<br>
 	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
 	<br>
@@ -28,12 +38,48 @@
 				<%}%>
 			</tbody>
 		</table>
-		<form class="mt-2" method="POST" action="/escucha/reminder" onsubmit="return confirm('Quieres Mandar los Recordatorios');">
-			<button class="btn btn-success btn-block">Mandar Recordatorios</button>
-		</form>
 	</div>
 </div>
 
-<!-- <a aria-label="Chat on WhatsApp" href="https://wa.me/525559175602?text=Compra%20una%20quesadilla">WhatsApp</a> -->
+
+<script>
+	var listevent = [
+		<%for (let e of data) {%>
+			{
+				title: '<%= e.primer_nombre + " " + e.apellido_paterno%>',
+				start: '<%= e.fecha.toISOString().substring(0, 10) %>', 
+				startTime: '<%= e.fecha.toISOString().substring(11, 19) %>', 
+				endTime: '<%= e.hora_termino %>',
+				url: '/escucha/<%= e.id_escucha%>'
+			},
+		<%}%>
+	];
+
+	document.addEventListener('DOMContentLoaded', function() {
+	  var calendarEl = document.getElementById('calendar');
+	  var calendar = new FullCalendar.Calendar(calendarEl, {
+		headerToolbar: {
+			left: '',
+			center: 'title',
+			right: 'prev,next'
+		},
+		initialView: 'timeGridDay',
+		locale: 'es',
+		height: 400,
+		allDaySlot: false,
+		events: listevent,
+		eventDisplay: 'block',
+		displayEventEnd: 'true',
+		eventTimeFormat: { // like '14:30:00'
+			hour: '2-digit',
+			minute: '2-digit',
+			meridiem: false
+		},
+	  });
+	  
+	  calendar.render();
+	});
+</script>
+
 
 <%- include('../partials/footer')%>

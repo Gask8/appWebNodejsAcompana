@@ -100,6 +100,28 @@ exports.findOne = (req, res) => {
   });
 };
 
+// FIND BY ID
+exports.findOneAdd = (req, res) => {
+  Doliente.findById(req.params.id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `No se encontro doliente con id ${req.params.id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error consiguiendo doliente con id " + req.params.id
+        });
+      }
+    }
+	  // else res.send(data);
+	 else {
+		var vsession = req.session;
+		res.render('doliente/byIdAdd',{ data, vsession });
+	}
+  });
+};
+
 // UPDATE BY ID
 exports.update = (req, res) => {
   // Validate Request
@@ -108,7 +130,7 @@ exports.update = (req, res) => {
       message: "Contenido no puede estar vacio!"
     });
   }
-  Doliente.updateById(
+  Doliente.updateByIdSimple(
     req.params.id,
     new Doliente(req.body),
     (err, data) => {
@@ -126,6 +148,37 @@ exports.update = (req, res) => {
 		else {
 			req.flash('succes','El doliente se ha actualizado');
 			res.redirect('/doliente/'+req.params.id);
+		}
+    }
+  );
+};
+
+// COMPLEMENT BY ID
+exports.updateAdd = (req, res) => {
+  // Validate Request
+  if (!req.body) {
+    res.status(400).send({
+      message: "Contenido no puede estar vacio!"
+    });
+  }
+  Doliente.updateByIdAdding(
+    req.params.id,
+    new Doliente(req.body),
+    (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            message: `No se encontro doliente con id ${req.params.id}.`
+          });
+        } else {
+          res.status(500).send({
+            message: "Error actializando doliente con id " + req.params.id
+          });
+        }
+      } 
+		else {
+			req.flash('succes','El Doliente ya tiene su liga');
+			res.redirect('/escucha/nuevo?id_doliente='+req.params.id+'&name='+req.body.primer_nombre+'&lastname='+req.body.apellido_paterno);
 		}
     }
   );

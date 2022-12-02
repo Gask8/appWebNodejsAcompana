@@ -1,5 +1,6 @@
 const sql = require("../config/db.js");
 const bcrypt = require('bcrypt');
+const Doliente = require("../models/doliente.model.js");
 
 const Usuario = function(user) {
     this.id_usuario = user.id_usuario;
@@ -58,6 +59,15 @@ exports.findOne = (req, res) => {
               // encrypted password   
               if (isMatch) {
 
+                Doliente.getAllNewCount((err, data) => {
+                  if (err)
+                    console.Console(err);
+                  else {
+                  req.session.numnew = data.count;
+                  console.log("numero es ",data);
+                  console.log("numero es ",req.session.numnew);
+                }
+                })
                 req.session.id = data.id_usuario;
                 req.session.email = data.email;
                 req.flash('success','Bienvenido')
@@ -70,19 +80,6 @@ exports.findOne = (req, res) => {
                   res.redirect('/')
               }
             })
-
-            // if(data.password==user.password){
-            //     req.session.id = data.id_usuario;
-            //     req.session.email = data.email;
-                
-            //     req.flash('success','Bienvenido')
-            //     res.redirect('/')
-
-  
-            // } else {
-            //     req.flash('wrong','Usuario o contrasena mala')
-            //     res.redirect('/')
-            // }
         }
     });
 };

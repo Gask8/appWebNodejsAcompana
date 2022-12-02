@@ -39,6 +39,7 @@ exports.create = async(req, res) => {
     date.setDate(date.getDate() + 7);
     escucha.fecha=date.toISOString().split('.')[0];
     citas.push(escucha.fecha.split('T')[0]);
+    escucha.numero_escucha++;
   }
 
   await Voluntario.findById(req.body.id_voluntario, async(err, data) => {

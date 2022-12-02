@@ -14,7 +14,7 @@
 
 <div class="container">
 	<div class="jumbotron mt-5">
-		<h2>Formulario de Escucha</h2>
+		<h2>Asignar Voluntario y Horario a Doliente</h2>
 		<form method="POST" action="/escucha">
 			<!-- <div class="form-group">
 				<label for="id">Id:</label>
@@ -22,8 +22,8 @@
 			</div> -->
 			<%if(urlquery.id!=null){%>
 				<div class="form-group">
-					<label for="idDoliente">Doliente:</label>
-					<input type="text" class="form-control" id="idDoliente" value="<%=urlquery.name%>" disabled>
+					<!-- <label for="idDoliente">Doliente:</label> -->
+					<!-- <input type="text" class="form-control" id="idDoliente" value="<%=urlquery.name%>" disabled> -->
 					<input type="hidden" name="id_doliente" value="<%=urlquery.id%>">
 				</div>
 			<%} else {%>

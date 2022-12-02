@@ -66,6 +66,17 @@ Doliente.getAllNew = result => {
   });
 };
 
+Doliente.getAllNewCount = result => {
+  sql.query("SELECT COUNT(*) as count FROM doliente WHERE id_doliente NOT in(SELECT d.id_doliente FROM doliente d, escucha e WHERE d.id_doliente = e.id_doliente);", (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(null, err);
+      return;
+    }
+	  console.log("dolientes encontrados",res);
+	  result(null, res);
+  });
+};
 
 Doliente.getAll = result => {
   sql.query("SELECT * FROM doliente", (err, res) => {
@@ -79,10 +90,33 @@ Doliente.getAll = result => {
   });
 };
 
-Doliente.updateById = (id_doliente, doliente, result) => {
+Doliente.updateByIdSimple = (id_doliente, doliente, result) => {
   sql.query(
-    "UPDATE doliente SET marca_temporal = ?, primer_nombre = ?, apellido_paterno = ?, edad = ?, ciudad_pais = ?, numero_celular = ?, correo = ?, liga_url = ?, liga_id = ?, liga_password = ?, preferencia_de_horario = ?, medio_de_enterarse = ?, quieres_recibir_info = ? WHERE id_doliente = ?",
-    [doliente.marca_temporal, doliente.primer_nombre, doliente.apellido_paterno, doliente.edad, doliente.ciudad_pais, doliente.numero_celular, doliente.correo, doliente.liga_url, doliente.liga_id, doliente.liga_password, doliente.preferencia_de_horario, doliente.medio_de_enterarse, doliente.quieres_recibir_info, id_doliente],
+    "UPDATE doliente SET primer_nombre = ?, apellido_paterno = ?, edad = ?, ciudad_pais = ?, numero_celular = ?, correo = ?, liga_url = ?, liga_id = ?, liga_password = ?, preferencia_de_horario = ?, medio_de_enterarse = ?, quieres_recibir_info = ? WHERE id_doliente = ?",
+    [doliente.primer_nombre, doliente.apellido_paterno, doliente.edad, doliente.ciudad_pais, doliente.numero_celular, doliente.correo, doliente.liga_url, doliente.liga_id, doliente.liga_password, doliente.preferencia_de_horario, doliente.medio_de_enterarse, doliente.quieres_recibir_info, id_doliente],
+    (err, res) => {
+      if (err) {
+        console.log("Error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        // not found Example with the id
+        result({ kind: "not_found" }, null);
+        return;
+      }
+
+      console.log("doliente: actualizado", { id: id_doliente, ...doliente });
+      result(null, { id: id_doliente, ...doliente });
+    }
+  );
+};
+
+Doliente.updateByIdAdding = (id_doliente, doliente, result) => {
+  sql.query(
+    "UPDATE doliente SET liga_url = ?, liga_id = ?, liga_password = ? WHERE id_doliente = ?",
+    [doliente.liga_url, doliente.liga_id, doliente.liga_password, id_doliente],
     (err, res) => {
       if (err) {
         console.log("Error: ", err);

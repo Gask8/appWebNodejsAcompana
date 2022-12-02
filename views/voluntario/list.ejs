@@ -4,6 +4,7 @@
 <div class="container mt-5">
 	<h1>Voluntario</h1>
 	<br>
+	<a href="/horario" class="btn btn-info btn-block mb-3">Ver Todos los Horarios</a>
 	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
 	<br>
 	<div class="container">
@@ -29,7 +30,6 @@
 				<%}%>
 			</tbody>
 		</table>
-		<a href="/horario" class="btn btn-info btn-block">Ver Todos los Horarios</a>
 		<a href="voluntario/nuevo" class="btn btn-primary btn-block">Crear</a>
 		<form class="mt-2" method="POST" action="/voluntario?_method=DELETE" onsubmit="return confirm('En serio quieres borrar todo?');">
 			<button class="btn btn-danger btn-block">Borrar Todo</button>

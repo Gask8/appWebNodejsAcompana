@@ -30,6 +30,7 @@ module.exports = app => {
 	router.put("/:id", horario.update);
 
 	// ByID DELETE
-	router.delete("/:id", horario.delete);
+	//Deberia borrar segun id de voluntario
+	//router.delete("/:id", horario.delete);
 
 };
