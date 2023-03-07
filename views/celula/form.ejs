@@ -4,10 +4,6 @@
 	<div class="jumbotron mt-5">
 		<h2>Formulario de Celula</h2>
 		<form method="POST" action="/celula">
-			<!-- <div class="form-group">
-				<label for="id">Id:</label>
-				<input type="number" class="form-control" id="id" placeholder="Escribir ID" name="id">
-			</div> -->
 			<div class="form-group">
 				<label for="nombre">Nombre:</label>
 				<input type="text" class="form-control" id="nombre" placeholder="Escribir Nombre" name="nombre_celula">
@@ -15,6 +11,10 @@
 			<div class="form-group">
 				<label for="lider">Lider:</label>
 				<input type="text" class="form-control" id="lider" placeholder="Escribir Nombre de Lider" name="nombre_lider">
+			</div>
+			<div class="form-group">
+				<label for="color">Color del Grupo:</label>
+				<input type="color" class="form-control" id="color" name="color" value="#626eff">
 			</div>
 			<button type="submit" class="btn btn-primary btn-block">Crear</button>
 		</form>

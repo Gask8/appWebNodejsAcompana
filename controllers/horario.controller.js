@@ -1,139 +1,163 @@
 const Horario = require("../models/horario.model.js");
 
-// Create and Save a new Customer
+// CREATE ELEMENT
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Contenido no puede estar vacio!"
     });
   }
+  console.log(req.body)
+  var cantidadHorarios = req.body.horariosCantidad;
+  var i;
+  
+  for(i=0; i <cantidadHorarios; i++){
+	  
+	  var horaComienzo = `${'req.body.hora_comienzo'+i}`;
+	  var horaTermino = `${'req.body.hora_termino'+i}`;
+	  var diaSemana = `${'req.body.dia_semana'+i}`;
+	  
+	  // Create JSON}
+	  const horario = new Horario({
+		id_horario: req.body.id_horario,	  
+		id_voluntario: req.body.id_voluntario,
+		hora_comienzo:  eval(horaComienzo),
+		hora_termino: eval(horaTermino),
+		dia_semana: eval(diaSemana),
+	  });
 
-  // Create a Customer
-  const horario = new Horario({
-    id_horario: req.body.id_horario,
-	id_voluntario: req.body.id_voluntario,
-	hora_comienzo: req.body.hora_comienzo,
-	hora_termino: req.body.hora_termino,
-	dia_semana: req.body.dia_semana,
-  });
+	  // Save in the database
+	  Horario.create(horario, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Error al crear un horario"
+        });
+	  });
 
-  // Save Customer in the database
-  Horario.create(horario, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Horario."
-      });
-    // else res.send(data);
-	  else {
-		  req.flash('succes','El horario se ha guardado');
-		  // res.redirect('/examples')
-	  }
-  });
+	}
+	req.flash('succes','El horario se ha guardado');
+	res.redirect('/horario')
+	
 };
 
-// Retrieve all Customers from the database.
+// GET ALL ELEMENTS.
 exports.findAll = (req, res) => {
   Horario.getAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving horarios."
+          err.message || "Error al regresar horario de la BD"
       }); 
     else {
 		var vsession = req.session;
-		// res.render('example/all',{ data, vsession });
+		res.render('horario/list',{ data, vsession });
 	}
   });
 };
 
-// Find a single Customer with a customerId
+// GET ALL ELEMENTS for one voluntario.
+exports.findAllForVol = (req, res) => {
+  Horario.getAllForVol(req.params.id, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Error al regresar horario de la BD"
+      }); 
+    else {
+		var vsession = req.session;
+    var idVoluntas = req.params.id;
+		res.render('horario/listById',{ data, vsession, idVoluntas });
+	}
+  });
+};
+
+// FIND BY ID
 exports.findOne = (req, res) => {
-  Horario.findById(req.params.id_horario, (err, data) => {
+  Horario.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Horario with id ${req.params.id_horario}.`
+          message: `No se encontro horario con id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Horario with id " + req.params.id_horario
+          message: "Error consiguiendo horario con id " + req.params.id
         });
       }
-    } 
+    }
 	  // else res.send(data);
 	 else {
 		var vsession = req.session;
-		// res.render('example/byId',{ data, vsession });
+		res.render('horario/byId',{ data, vsession });
 	}
   });
 };
 
-// Update a Customer identified by the customerId in the request
+// UPDATRE BY ID
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Contenido no puede estar vacio!"
     });
   }
   Horario.updateById(
-    req.params.id_horario,
+    req.params.id,
     new Horario(req.body),
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found Horario with id ${req.params.id_horario}.`
+            message: `No se encontro horario con id ${req.params.id}.`
           });
         } else {
           res.status(500).send({
-            message: "Error updating Horario with id " + req.params.id_horario
+            message: "Error actializando horario con id " + req.params.id
           });
         }
       } 
 		else {
 			req.flash('succes','El horario se ha actualizado');
-			// res.redirect('/examples/'+req.params.example);
+			res.redirect('/horario/'+req.params.id);
 		}
     }
   );
 };
 
-// Delete a Customer with the specified customerId in the request
+// DELETE BYID
 exports.delete = (req, res) => {
-  Horario.remove(req.params.id_horario, (err, data) => {
+  Horario.remove(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Horario with id ${req.params.id_horario}.`
+          message: `No se encontro horario con id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Could not delete Horario with id " + req.params.id_horario
+          message: "No se pudo borrar horario con id " + req.params.id
         });
       }
     } 
 	  else {
-		  req.flash('del','El horario se ha borrado');
-		  // res.redirect('/examples')
+		  req.flash('succes','El horario se ha borrado');
+		  res.redirect('/horario')
 	  }
   });
 };
 
-// Delete all Customers from the database.
+// DELETE ALL
 exports.deleteAll = (req, res) => {
   Horario.removeAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all horarios."
+          err.message || "Error Borrando todos los Horarios"
       });
-   // else res.send({ message: `All Examples were deleted successfully!` });
 	  else {
-		  req.flash('del','Se ha borrado todo con exito');
-		  // res.redirect('/examples')
+		  req.flash('succes','Se ha borrado todo con exito');
+		  res.redirect('/horario')
 	  }
   });
 };

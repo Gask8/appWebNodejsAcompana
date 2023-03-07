@@ -1,0 +1,31 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Info de Canalizado</h2>
+		<form method="POST" action="/canalizado/<%= data.canalizado %>?_method=PUT">
+			<div class="form-group">
+				<label for="idd">Id Doliente:</label>
+				<input type="number" class="form-control" id="idd" value="<%= data.id_doliente %>" name="id_doliente">
+			</div>
+			<div class="form-group">
+				<label for="canalizadoA">Canalizado a:</label>
+				<select class="form-control" id="canalizadoA" value="<%= data.canalizado_a %>" name="canalizado_a">
+                    <option value="GAM">GAM</option>
+                    <option value="NO_GAM">No GAM</option>
+                    <option value="BAJA">Baja</option>
+                </select>
+			</div>
+            <div class="form-group">
+				<label for="canalizadoComentario">Comentario:</label>
+				<input type="textarea" class="form-control" id="canalizadoComentario" name="canalizado_comentario" value="<%= data.canalizado_comentario %>">
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Cambiar</button>
+		</form>
+	</div>
+	<form class="mt-2" method="POST" action="/canalizado/<%= data.canalizado %>?_method=DELETE" onsubmit="return confirm('En serio quieres borrar?');">
+		<button class="btn btn-danger btn-block">Borrar</button>
+	</form>
+</div>
+
+<%- include('../partials/footer')%>

@@ -1,15 +1,5 @@
 <%- include('../partials/head')%>
-
-<script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-	var value = $(this).val().toLowerCase();
-	$("#myTable tr").filter(function() {
-	  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-	});
-  });
-});
-</script>
+<script src="/scripts/script.js"></script>
 
 <div class="container mt-5">
 	<h1>Celulas</h1>
@@ -28,8 +18,8 @@ $(document).ready(function(){
 			<tbody id="myTable">
 				<%for (let element of data) {%>
 				<tr>
-					<td><%= element.id_celula %></td>
-					<td><%= element.nombre_celula %></td>
+					<td style="background-color: <%= element.color %>;"><%= element.id_celula %></td>
+					<td><a href="/celula/<%=element.id_celula%>"><%= element.nombre_celula %></a></td>
 					<td><%= element.nombre_lider %></td>
 				</tr>
 				<%}%>

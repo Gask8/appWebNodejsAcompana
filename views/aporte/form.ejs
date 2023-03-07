@@ -1,0 +1,29 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Formulario de Aporte</h2>
+		<form method="POST" action="/aporte">
+			<div class="form-group">
+				<label for="d_id">Id de Doliente:</label>
+				<select name="id_doliente" id="d_id" class="form-control">
+					<option disabled selected value> -- Elije un Grupo -- </option>
+					<%for (let element of data) {%>
+						<option value="<%=element.id_doliente%>"><%= element.primer_nombre %> <%= element.apellido_paterno %></option>
+					<%}%>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="cantidadAportada">Cantidad Aportada:</label>
+				<input type="number" class="form-control" id="cantidadAportada" placeholder="Escribir cantidad" name="cantidad_que_aporto">
+			</div>
+			<div class="form-group">
+				<label for="fechaDeposito">Fecha de depósito:</label>
+				<input type="date" class="form-control" id="fechaDeposito" name="fecha_de_deposito">
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Crear</button>
+		</form>
+	</div>
+</div>
+
+<%- include('../partials/footer')%>

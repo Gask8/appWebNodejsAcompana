@@ -1,0 +1,35 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Info de Horario</h2>
+		<form method="POST" action="/horario/<%= data.id_horario %>?_method=PUT">
+			<div class="form-group">
+				<label for="id">Id:</label>
+				<input type="number" class="form-control" id="id" value="<%= data.id_horario %>" disabled>
+			</div>
+			<div class="form-group">
+				<label for="idVoluntario">Id voluntario:</label>
+				<input type="number" class="form-control" id="idVoluntario" value="<%= data.id_voluntario %>" name="id_voluntario">
+			</div>
+			<div class="form-group">
+				<label for="horaComienzo">Hora Comienzo:</label>
+				<input type="time" class="form-control" id="horaComienzo" value="<%= data.hora_comienzo %>" name="hora_comienzo">
+			</div>
+			<div class="form-group">
+				<label for="horaTermino">Hora término:</label>
+				<input type="time" class="form-control" id="horaTermino" value="<%= data.hora_termino %>" name="hora_termino">
+			</div>
+			<div class="form-group">
+				<label for="diaSemana">Dia de la semana:</label>
+				<input type="textarea" class="form-control" id="diaSemana" value="<%= data.dia_semana %>" name="dia_semana">
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Cambiar</button>
+		</form>
+	</div>
+	<form class="mt-2" method="POST" action="/horario/<%= data.id_horario %>?_method=DELETE" onsubmit="return confirm('En serio quieres borrar?');">
+		<button class="btn btn-danger btn-block">Borrar</button>
+	</form>
+</div>
+
+<%- include('../partials/footer')%>

@@ -17,20 +17,46 @@
 <body>
 	
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	<a class="navbar-brand" href="/" style="background: white">
+	<!-- <a class="navbar-brand" href="/" style="background: white">
 		<img src="https://acompana.org/wp-content/uploads/2020/02/logo-Acompan%CC%83a_horizontal-copy-2.png" alt="logo" style="width:100px;">
-	</a>
-  <ul class="navbar-nav">
+	</a> -->
+  <ul class="navbar-nav mr-auto">
     <li class="nav-item active">
       <a class="nav-link" href="/">Acompaña App</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/celula">Celulas</a>
+      <a class="nav-link" href="/celula">Células</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Disabled</a>
+	<li class="nav-item">
+      <a class="nav-link" href="/voluntario">Voluntarios</a>
     </li>
+	<li class="nav-item">
+      <a class="nav-link" href="/doliente">Dolientes</a>
+    </li>
+	<li class="nav-item">
+      <a class="nav-link" href="/escucha">Escuchas</a>
+    </li>
+	<li class="nav-item">
+		<a class="nav-link" href="/escucha/todas">Todas Escuchas</a>
+	  </li>
+	<li class="nav-item">
+		<a class="nav-link" href="/canalizado">Canalizado</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="/aporte">Aporte</a>
+	</li>
   </ul>
+  <ul class="navbar-nav">
+	<%if (vsession.email==undefined){%>
+	<li class="nav-item active" >
+		<a class="nav-link" href="/login">Log In</a>
+	</li>
+	<%} else {%>
+		<li class="nav-item" style="margin-right: 20px; font-weight: bold; color: red;"><%=vsession.numnew%></li>
+  	<li class="nav-item" style="margin-right: 20px; font-weight: bold; color: white;"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="logo" style="width:20px;filter: invert(1);"> <%=vsession.email.toUpperCase()%></li>
+	<li class="nav-item"><a style="color: #ffff;" href="/logout">Log Out</a></li>
+	<%}%>
+</ul>
 </nav>
 	
 	<div class="container">

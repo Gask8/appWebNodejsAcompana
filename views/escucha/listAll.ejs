@@ -1,0 +1,79 @@
+<%- include('../partials/head')%>
+<script src="/scripts/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+
+<div class="container mt-5">
+	<a href="/escucha" class="btn btn-info">Escuchas de Hoy</a>
+	<h1>Todas las Escuchas</h1>
+	<div class="jumbotron" style="background-color: #f7f7f7;">
+		<div></div>
+		<div id='calendar'></div>
+	</div>
+	<br>
+	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
+	<br>
+	<div class="container">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Doliente</th>
+					<th>Voluntario</th>
+					<th>Fecha</th>
+					<th>Hora</th>
+				</tr>
+			</thead>
+			<tbody id="myTable">
+				<%for (let element of data) {%>
+				<tr>
+					<td><a href="/escucha/<%=element.id_escucha%>"><%= element.id_escucha %></a></td>
+					<td><%= element.primer_nombre %> <%= element.apellido_paterno %></td>
+					<td><%= element.nombre %> <%= element.apellido %></td>
+					<td><%= element.fecha.toISOString().split('T')[0] %></td>
+					<td><%= element.fecha.toISOString().split('T')[1].split('.')[0] %></td>
+				</tr>
+				<%}%>
+			</tbody>
+		</table>
+		<a href="/escucha/nuevo" class="btn btn-primary btn-block">Crear</a>
+		<form class="mt-2" method="POST" action="/escucha?_method=DELETE" onsubmit="return confirm('En serio quieres borrar todo?');">
+			<button class="btn btn-danger btn-block">Borrar Todo</button>
+		</form>
+	</div>
+</div>
+
+
+<script>
+	var listevent = [
+		<%for (let e of data) {%>
+			{
+				title: '<%= e.primer_nombre + " " + e.apellido_paterno%>',
+				start: '<%= e.fecha.toISOString().substring(0, 10) %>',
+				url: '/escucha/<%= e.id_escucha%>'
+			},
+		<%}%>
+	];
+
+	document.addEventListener('DOMContentLoaded', function() {
+	  var calendarEl = document.getElementById('calendar');
+	  var calendar = new FullCalendar.Calendar(calendarEl, {
+		initialView: 'dayGridMonth',
+		locale: 'es',
+		height: 400,
+		allDaySlot: false,
+		events: listevent,
+		eventDisplay: 'block',
+		displayEventEnd: 'true',
+		eventTimeFormat: { // like '14:30:00'
+			hour: '2-digit',
+			minute: '2-digit',
+			meridiem: false
+		},
+	  });
+	  
+	  calendar.render();
+	});
+</script>
+
+<%- include('../partials/footer')%>

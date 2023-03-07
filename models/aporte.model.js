@@ -1,8 +1,8 @@
-const sql = require("./db.js");
+const sql = require("../config/db.js");
 
 // constructor
 const Aporte = function(aporte) {
-  this.id_aporte= aporte.id_aporte
+  this.id_aporte = aporte.id_aporte;
   this.id_doliente = aporte.id_doliente;
   this.cantidad_que_aporto = aporte.cantidad_que_aporto;
   this.fecha_de_deposito = aporte.fecha_de_deposito;
@@ -11,25 +11,25 @@ const Aporte = function(aporte) {
 Aporte.create = (newAporte, result) => {
   sql.query("INSERT INTO aporte SET ?", newAporte, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
-    console.log("created aporte: ", { id: res.id_doliente, ...newAporte });
-    result(null, { id: res.id_doliente, ...newAporte });
+    console.log("aporte creado: ", { id: res.id_aporte, ...newAporte });
+    result(null, { id: res.id_aporte, ...newAporte });
   });
 };
 
-Aporte.findById = (id_aporte, result) => {
-  sql.query("SELECT * FROM aporte WHERE id_aporte = ?", id_aporte, (err, res) => {
+Aporte.findById = (id, result) => {
+  sql.query(`SELECT * FROM aporte WHERE id_aporte = ${id}`, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
 
     if (res.length) {
-      console.log("found aporte: ", res[0]);
+      console.log("aporte encontrado: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -38,27 +38,26 @@ Aporte.findById = (id_aporte, result) => {
     result({ kind: "not_found" }, null);
   });
 };
-
+	
 Aporte.getAll = result => {
   sql.query("SELECT * FROM aporte", (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
-	  console.log("found all aportes: ");
-    // console.log("examples: ", res);
-    result(null, res);
+	  console.log("aportes encontrados",res);
+	  result(null, res);
   });
 };
 
 Aporte.updateById = (id_aporte, aporte, result) => {
   sql.query(
-    "UPDATE aporte SET id_doliente = ?, cantidad_que_aporto = ?, fecha_de_deposito = ?, WHERE id_aporte = ?",
-    [aporte.id_doliente, aporte.cantidad_que_aporto, aporte.fecha_de_deposito, id_aporte],
+    "UPDATE aporte SET id_doliente = ?, cantidad_que_aporto = ?, fecha_de_deposito = ? WHERE id_aporte = ?",
+    [aporte.id_doliente, aporte.cantidad_que_aporto, fecha_de_deposito, id_aporte],
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
+        console.log("Error: ", err);
         result(null, err);
         return;
       }
@@ -69,7 +68,7 @@ Aporte.updateById = (id_aporte, aporte, result) => {
         return;
       }
 
-      console.log("updated aporte: ", { id: id_aporte, ...aporte });
+      console.log("aporte: actualizado", { id: id_aporte, ...aporte });
       result(null, { id: id_aporte, ...aporte });
     }
   );
@@ -78,7 +77,7 @@ Aporte.updateById = (id_aporte, aporte, result) => {
 Aporte.remove = (id_aporte, result) => {
   sql.query("DELETE FROM aporte WHERE id_aporte = ?", id_aporte, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
@@ -89,7 +88,7 @@ Aporte.remove = (id_aporte, result) => {
       return;
     }
 
-    console.log("deleted aporte with id: ", id_aporte);
+    console.log("aporte borrada con id: ", id_aporte);
     result(null, res);
   });
 };

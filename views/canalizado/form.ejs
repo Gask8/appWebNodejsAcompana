@@ -1,0 +1,33 @@
+<%- include('../partials/head')%>
+
+<div class="container">
+	<div class="jumbotron mt-5">
+		<h2>Formulario de Canalizado</h2>
+		<form method="POST" action="/canalizado">
+			<div class="form-group">
+				<label for="d_id">Id de Doliente:</label>
+				<select name="id_doliente" id="d_id" class="form-control">
+					<option disabled selected value> -- Elije un Grupo -- </option>
+					<%for (let element of data) {%>
+						<option value="<%=element.id_doliente%>"><%= element.primer_nombre %> <%= element.apellido_paterno %></option>
+					<%}%>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="canalizadoA">Canalizado a:</label>
+                <select class="form-control" id="canalizadoA" name="canalizado_a">
+                    <option value="GAM">GAM</option>
+                    <option value="NO_GAM">No GAM</option>
+                    <option value="BAJA">Baja</option>
+                </select>
+			</div>
+			<div class="form-group">
+				<label for="canalizadoComentario">Comentario:</label>
+				<input type="textarea" class="form-control" id="canalizadoComentario" name="canalizado_comentario">
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Crear</button>
+		</form>
+	</div>
+</div>
+
+<%- include('../partials/footer')%>

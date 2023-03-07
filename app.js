@@ -1,3 +1,4 @@
+require('dotenv').config({path:__dirname+'/config/.env'}); 
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -7,6 +8,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const sessions = require('express-session');
 const flash = require('connect-flash');
+const { Client,LocalAuth  } = require('whatsapp-web.js');
 
 const app = express();
 const router = express.Router();
@@ -40,9 +42,13 @@ app.use((req,res,next)=>{
 // app.use('/', router);
 var index = require('./routes/index');
 app.use('/', index);
-require("./routes/example.routes.js")(app);
 require("./routes/celula.routes.js")(app);
-
+require("./routes/voluntario.routes.js")(app);
+require("./routes/doliente.routes.js")(app);
+require("./routes/escucha.routes.js")(app);
+require("./routes/horario.routes.js")(app);
+require("./routes/aporte.routes.js")(app);
+require("./routes/canalizado.routes.js")(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,5 +69,5 @@ app.use(function(err, req, res, next) {
 });
 
 //Listening Port
-app.listen(process.env.PORT || 3000, () => console.log('Listening on port 3000!'));
+app.listen(process.env.PORT || 3000, () => console.log('Escuchando en el puerto '+process.env.PORT));
 module.exports = app;

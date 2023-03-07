@@ -1,0 +1,38 @@
+<%- include('../partials/head')%>
+<script src="/scripts/script.js"></script>
+
+<div class="container mt-5">
+	<a href="/doliente" class="btn btn-info">Regresar</a>
+	<h1>Dolientes</h1>
+	<br>
+	<input class="form-control" id="myInput" type="text" placeholder="Buscar..">
+	<br>
+	<div class="container">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Edad</th>
+					<th>Celular</th>
+					<th>Preferencia</th>
+					<th>Assignar<br>Voluntario</th>
+				</tr>
+			</thead>
+			<tbody id="myTable">
+				<%for (let element of data) {%>
+				<tr>
+					<td><%= element.id_doliente %></td>
+					<td><a href="/doliente/<%=element.id_doliente%>"><%= element.primer_nombre %> <%= element.apellido_paterno %></a></td>
+					<td><%= element.edad %></td>
+					<td><%= element.numero_celular %></td>
+					<td><%= element.preferencia_de_horario.toUpperCase() %></td>
+					<td><a href="/doliente/addInfo/<%=element.id_doliente%>" class="btn btn-primary btn-block">Asignar</a></td>
+				</tr>
+				<%}%>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<%- include('../partials/footer')%>

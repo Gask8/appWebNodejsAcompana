@@ -1,2 +1,4 @@
 /node_modules
 /goorm.manifest
+/config/.env
+/.wwebjs_auth

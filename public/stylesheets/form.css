@@ -1,0 +1,54 @@
+/*  General */
+body{
+	background: #e9eef3;
+}
+.jumbotron{
+	background-color: #ffffff !important;
+}
+
+.red_star{
+	color: #d93025;
+    padding-left: 0.25em;
+}
+
+/* .form-th{
+	font-size: inherit !important;
+} */
+
+/*  Display On and Off*/
+.activesld{
+	display: block !important;
+}
+.nonact{
+	display: none;
+}
+
+/*  Botones de Siguiente y Anterio*/
+.botombtn{
+	display: flex;
+	justify-content: space-evenly;
+}
+.botombtn .btn, .botombt .btn-primary{
+	width: 25%;
+	background-color: rgb(31, 84, 138);
+	border-color: #cccccc;
+	color: #fff;
+	height: 40px;
+	font-weight: bold;
+}
+.botombtn .btn:hover, .botombt .btn-primary:hover{
+	background-color: #316193;
+	transition: all 0.5s;
+}
+
+/*  MOBILE*/
+@media only screen and (max-width: 600px) {
+	#mob-img {
+		width: 200px;
+		height: 45px;
+	}
+
+	.botombtn .btn, .botombt .btn-primary{
+		width: 45%;
+	}
+}

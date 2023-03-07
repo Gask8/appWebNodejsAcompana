@@ -1,37 +1,37 @@
-const sql = require("./db.js");
+const sql = require("../config/db.js");
 
 // constructor
-const Ser_querido = function(ser_querido) {
-  this.id_doliente= ser_querido.id_doliente
-  this.fecha_muerte = ser_querido.fecha_muerte;
-  this.nombre = ser_querido.nombre;
-  this.tipo_relacion = ser_querido.tipo_relacion;
-  this.motivo_muerte = ser_querido.motivo_muerte;
-  this.edad_muerte = ser_querido.edad_muerte;
+const SerQ = function(serQ) {
+  this.id_serQ = serQ.id_serQ;
+  this.f_fecha_muerte = serQ.f_fecha_muerte;
+  this.f_nombre = serQ.f_nombre;
+  this.f_tipo_relacion = serQ.apellido_paterno;
+  this.f_motivo_muerte = serQ.edad;
+  this.f_edad_muerte = serQ.ciudad_pais;
 };
 
-Ser_querido.create = (newSer_querido, result) => {
-  sql.query("INSERT INTO ser_querido SET ?", newSer_querido, (err, res) => {
+SerQ.create = (newSerQ, result) => {
+  sql.query("INSERT INTO serQ SET ?", newSerQ, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
-    console.log("created ser_querido: ", { id: res.id_doliente, ...newSer_querido });
-    result(null, { id: res.id_doliente, ...newSer_querido });
+    console.log("serQ creado: ", { id: res.id_serQ, ...newSerQ });
+    result(null, { id: res.id_serQ, ...newSerQ });
   });
 };
 
-Ser_querido.findById = (id_doliente, result) => {
-  sql.query("SELECT * FROM ser_querido WHERE id_doliente = ?", id_doliente, (err, res) => {
+SerQ.findById = (id, result) => {
+  sql.query(`SELECT * FROM serQ WHERE id_serQ = ${id}`, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
 
     if (res.length) {
-      console.log("found ser_querido: ", res[0]);
+      console.log("serQ encontrado: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -41,47 +41,10 @@ Ser_querido.findById = (id_doliente, result) => {
   });
 };
 
-Ser_querido.getAll = result => {
-  sql.query("SELECT * FROM ser_querido", (err, res) => {
+SerQ.remove = (id_serQ, result) => {
+  sql.query("DELETE FROM serQ WHERE id_serQ = ?", id_serQ, (err, res) => {
     if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-	  console.log("found all ser_queridos: ");
-    // console.log("examples: ", res);
-    result(null, res);
-  });
-};
-
-Ser_querido.updateById = (id_doliente, ser_querido, result) => {
-  sql.query(
-    "UPDATE ser_querido SET fecha_muerte = ?, nombre = ?, tipo_relacion = ?, motivo_muerte = ?, edad_muerte = ?, WHERE id_doliente = ?",
-    [ser_querido.fecha_muerte, ser_querido.nombre, ser_querido.tipo_relacion, ser_querido.motivo_muerte, 
-	 ser_querido.edad_muerte, id_doliente],
-    (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-        return;
-      }
-
-      if (res.affectedRows == 0) {
-        // not found Example with the id
-        result({ kind: "not_found" }, null);
-        return;
-      }
-
-      console.log("updated ser_querido: ", { id: id_doliente, ...ser_querido });
-      result(null, { id: id_doliente, ...ser_querido });
-    }
-  );
-};
-
-Ser_querido.remove = (id_doliente, result) => {
-  sql.query("DELETE FROM ser_querido WHERE id_doliente = ?", id_doliente, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
@@ -92,22 +55,9 @@ Ser_querido.remove = (id_doliente, result) => {
       return;
     }
 
-    console.log("deleted ser_querido with id: ", id_doliente);
+    console.log("serQ borrado con id: ", id_serQ);
     result(null, res);
   });
 };
 
-Ser_querido.removeAll = result => {
-  sql.query("DELETE FROM ser_querido", (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-
-    console.log(`deleted ${res.affectedRows} ser_queridos`);
-    result(null, res);
-  });
-};
-
-module.exports = Ser_querido;
+module.exports = SerQ;

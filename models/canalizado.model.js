@@ -1,8 +1,8 @@
-const sql = require("./db.js");
+const sql = require("../config/db.js");
 
 // constructor
 const Canalizado = function(canalizado) {
-  this.id_doliente= canalizado.id_doliente
+  this.id_doliente = canalizado.id_doliente;
   this.canalizado_a = canalizado.canalizado_a;
   this.canalizado_comentario = canalizado.canalizado_comentario;
 };
@@ -10,25 +10,25 @@ const Canalizado = function(canalizado) {
 Canalizado.create = (newCanalizado, result) => {
   sql.query("INSERT INTO canalizado SET ?", newCanalizado, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
-    console.log("created canalizado: ", { id: res.id_doliente, ...newCanalizado });
+    console.log("canalizado creado: ", { id: res.id_doliente, ...newCanalizado });
     result(null, { id: res.id_doliente, ...newCanalizado });
   });
 };
 
-Canalizado.findById = (id_doliente, result) => {
-  sql.query("SELECT * FROM canalizado WHERE id_doliente = ?", id_doliente, (err, res) => {
+Canalizado.findById = (id, result) => {
+  sql.query(`SELECT * FROM canalizado WHERE id_doliente = ${id}`, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
 
     if (res.length) {
-      console.log("found canalizado: ", res[0]);
+      console.log("canalizado encontrado: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -37,27 +37,26 @@ Canalizado.findById = (id_doliente, result) => {
     result({ kind: "not_found" }, null);
   });
 };
-
+	
 Canalizado.getAll = result => {
-  sql.query("SELECT * FROM canalizado", (err, res) => {
+  sql.query("SELECT c.id_doliente, d.primer_nombre, d.apellido_paterno, c.canalizado_a, c.canalizado_comentario FROM canalizado c, doliente d WHERE c.id_doliente = d.id_doliente", (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
-	  console.log("found all canalizados: ");
-    // console.log("examples: ", res);
-    result(null, res);
+	  console.log("canalizados encontrados",res);
+	  result(null, res);
   });
 };
 
 Canalizado.updateById = (id_doliente, canalizado, result) => {
   sql.query(
-    "UPDATE canalizado SET canalizado_a = ?, canalizado_comentario = ?, WHERE id_doliente = ?",
+    "UPDATE canalizado SET canalizado_a = ?, canalizado_comentario = ? WHERE id_doliente = ?",
     [canalizado.canalizado_a, canalizado.canalizado_comentario, id_doliente],
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
+        console.log("Error: ", err);
         result(null, err);
         return;
       }
@@ -68,7 +67,7 @@ Canalizado.updateById = (id_doliente, canalizado, result) => {
         return;
       }
 
-      console.log("updated canalizado: ", { id: id_doliente, ...canalizado });
+      console.log("canalizado: actualizado", { id: id_doliente, ...canalizado });
       result(null, { id: id_doliente, ...canalizado });
     }
   );
@@ -77,7 +76,7 @@ Canalizado.updateById = (id_doliente, canalizado, result) => {
 Canalizado.remove = (id_doliente, result) => {
   sql.query("DELETE FROM canalizado WHERE id_doliente = ?", id_doliente, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
@@ -88,7 +87,7 @@ Canalizado.remove = (id_doliente, result) => {
       return;
     }
 
-    console.log("deleted canalizado with id: ", id_doliente);
+    console.log("canalizado borrada con id: ", id_doliente);
     result(null, res);
   });
 };

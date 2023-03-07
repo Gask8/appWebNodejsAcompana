@@ -1,10 +1,11 @@
-const sql = require("./db.js");
+const sql = require("../config/db.js");
 
 // constructor
 const Escucha = function(escucha) {
-  this.id_escucha = escucha.id_escucha
+  this.id_escucha = escucha.id_escucha;
   this.id_doliente = escucha.id_doliente;
   this.id_voluntario = escucha.id_voluntario;
+  this.numero_escucha = escucha.numero_escucha;
   this.fecha = escucha.fecha;
   this.hora_termino = escucha.hora_termino;
   this.se_cumplio = escucha.se_cumplio;
@@ -14,66 +15,73 @@ const Escucha = function(escucha) {
 Escucha.create = (newEscucha, result) => {
   sql.query("INSERT INTO escucha SET ?", newEscucha, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
-    console.log("created escucha: ", { id: res.id_escucha, ...newEscucha });
+    console.log("escucha creado: ", { id: res.id_escucha, ...newEscucha });
     result(null, { id: res.id_escucha, ...newEscucha });
   });
 };
 
-Escucha.findById = (id_escucha, result) => {
-  sql.query("SELECT * FROM escucha WHERE id_escucha = ?", id_escucha, (err, res) => {
+Escucha.findById = (id, result) => {
+  sql.query(`SELECT * FROM escucha WHERE id_escucha = ${id}`, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
-
     if (res.length) {
-      console.log("found escucha: ", res[0]);
+      console.log("escucha encontrado: ", res[0]);
       result(null, res[0]);
       return;
     }
-
     // not found Example with the id
     result({ kind: "not_found" }, null);
   });
 };
 
 Escucha.getAll = result => {
-  sql.query("SELECT * FROM escucha", (err, res) => {
+  sql.query("SELECT id_escucha, e.id_doliente, e.id_voluntario, primer_nombre, apellido_paterno, nombre, apellido, fecha, hora_termino, se_cumplio FROM escucha e, doliente d, voluntario v WHERE d.id_doliente = e.id_doliente AND e.id_voluntario = v.id_voluntario ORDER BY fecha", (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
-	  console.log("found all escuchas: ");
-    // console.log("examples: ", res);
-    result(null, res);
+	  console.log("escuchas encontrados",res);
+	  result(null, res);
+  });
+};
+
+Escucha.getAllToday = result => {
+  let today = new Date().toISOString().split('T')[0]+"%";
+  sql.query("SELECT id_escucha, e.id_doliente, e.id_voluntario, primer_nombre, apellido_paterno, nombre, apellido, fecha, hora_termino, d.numero_celular as numdol, v.numero_celular as numvol FROM escucha e, doliente d, voluntario v WHERE d.id_doliente = e.id_doliente AND e.id_voluntario = v.id_voluntario AND fecha Like ?",[today], (err, res) => {
+    if (err) {
+      console.log("Error: ", err);
+      result(null, err);
+      return;
+    }
+	  console.log("escuchas encontrados",res);
+	  result(null, res);
   });
 };
 
 Escucha.updateById = (id_escucha, escucha, result) => {
   sql.query(
-    "UPDATE escucha SET id_doliente = ?, id_voluntario = ?, fecha = ?, hora_termino = ?, se_cumplio = ?, comentario = ?, WHERE id_escucha = ?",
-    [escucha.id_doliente, escucha.id_voluntario, escucha.fecha, escucha.hora_termino,
-	 escucha.se_cumplio, escucha.comentario, id_escucha],
+    "UPDATE escucha SET id_voluntario = ?, numero_escucha = ?, fecha = ?, hora_termino = ?, se_cumplio = ?, comentario = ? WHERE id_escucha = ?",
+    [escucha.id_voluntario, escucha.numero_escucha, escucha.fecha, escucha.hora_termino, escucha.se_cumplio, escucha.comentario, id_escucha],
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
+        console.log("Error: ", err);
         result(null, err);
         return;
       }
-
       if (res.affectedRows == 0) {
         // not found Example with the id
         result({ kind: "not_found" }, null);
         return;
       }
-
-      console.log("updated escucha: ", { id: id_escucha, ...escucha });
+      console.log("escucha: actualizado", { id: id_escucha, ...escucha });
       result(null, { id: id_escucha, ...escucha });
     }
   );
@@ -82,18 +90,16 @@ Escucha.updateById = (id_escucha, escucha, result) => {
 Escucha.remove = (id_escucha, result) => {
   sql.query("DELETE FROM escucha WHERE id_escucha = ?", id_escucha, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
-
     if (res.affectedRows == 0) {
       // not found Example with the id
       result({ kind: "not_found" }, null);
       return;
     }
-
-    console.log("deleted escucha with id: ", id_escucha);
+    console.log("escucha borrado con id: ", id_escucha);
     result(null, res);
   });
 };
@@ -105,7 +111,6 @@ Escucha.removeAll = result => {
       result(null, err);
       return;
     }
-
     console.log(`deleted ${res.affectedRows} escuchas`);
     result(null, res);
   });

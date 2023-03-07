@@ -1,34 +1,35 @@
-const sql = require("./db.js");
+const sql = require("../config/db.js");
 
 // constructor
 const Celula = function(celula) {
   this.id_celula = celula.id_celula
   this.nombre_celula = celula.nombre_celula;
   this.nombre_lider = celula.nombre_lider;
+  this.color = celula.color;
 };
 
 Celula.create = (newCelula, result) => {
   sql.query("INSERT INTO celula SET ?", newCelula, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
-    console.log("created celula: ", { id: res.id_celula, ...newCelula });
+    console.log("celula creada: ", { id: res.id_celula, ...newCelula });
     result(null, { id: res.id_celula, ...newCelula });
   });
 };
 
-Celula.findById = (id_celula, result) => {
-  sql.query("SELECT * FROM celula WHERE id_celula = ?", id_celula, (err, res) => {
+Celula.findById = (id, result) => {
+  sql.query(`SELECT * FROM celula WHERE id_celula = ${id}`, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
 
     if (res.length) {
-      console.log("found celula: ", res[0]);
+      console.log("celula encontrada: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -37,27 +38,26 @@ Celula.findById = (id_celula, result) => {
     result({ kind: "not_found" }, null);
   });
 };
-
+	
 Celula.getAll = result => {
   sql.query("SELECT * FROM celula", (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
-	  console.log("Se encontraron todas las celulas: ");
-    // console.log("examples: ", res);
-    result(null, res);
+	  console.log("celulas encontradas",res);
+	  result(null, res);
   });
 };
 
 Celula.updateById = (id_celula, celula, result) => {
   sql.query(
-    "UPDATE celula SET nombre_celula = ?, nombre_lider = ?, WHERE id_celula = ?",
-    [celula.nombre_celula, celula.nombre_lider, id_celula],
+    "UPDATE celula SET nombre_celula = ?, nombre_lider = ?, color = ? WHERE id_celula = ?",
+    [celula.nombre_celula, celula.nombre_lider, celula.color, id_celula],
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
+        console.log("Error: ", err);
         result(null, err);
         return;
       }
@@ -68,7 +68,7 @@ Celula.updateById = (id_celula, celula, result) => {
         return;
       }
 
-      console.log("updated celula: ", { id: id_celula, ...celula });
+      console.log("celula: actualizada", { id: id_celula, ...celula });
       result(null, { id: id_celula, ...celula });
     }
   );
@@ -77,7 +77,7 @@ Celula.updateById = (id_celula, celula, result) => {
 Celula.remove = (id_celula, result) => {
   sql.query("DELETE FROM celula WHERE id_celula = ?", id_celula, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
@@ -88,7 +88,7 @@ Celula.remove = (id_celula, result) => {
       return;
     }
 
-    console.log("deleted celula with id: ", id_celula);
+    console.log("celula borrada con id: ", id_celula);
     result(null, res);
   });
 };

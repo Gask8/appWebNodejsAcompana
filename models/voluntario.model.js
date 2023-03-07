@@ -1,4 +1,4 @@
-const sql = require("./db.js");
+const sql = require("../config/db.js");
 
 // constructor
 const Voluntario = function(voluntario) {
@@ -15,25 +15,25 @@ const Voluntario = function(voluntario) {
 Voluntario.create = (newVoluntario, result) => {
   sql.query("INSERT INTO voluntario SET ?", newVoluntario, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
-    console.log("created voluntario: ", { id: res.id_voluntario, ...newVoluntario });
+    console.log("voluntario creada: ", { id: res.id_voluntario, ...newVoluntario });
     result(null, { id: res.id_voluntario, ...newVoluntario });
   });
 };
 
-Voluntario.findById = (id_voluntario, result) => {
-  sql.query("SELECT * FROM voluntario WHERE id_voluntario = ?", id_voluntario, (err, res) => {
+Voluntario.findById = (id, result) => {
+  sql.query(`SELECT * FROM voluntario WHERE id_voluntario = ${id}`, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(err, null);
       return;
     }
 
     if (res.length) {
-      console.log("found voluntario: ", res[0]);
+      console.log("voluntario encontrada: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -42,28 +42,25 @@ Voluntario.findById = (id_voluntario, result) => {
     result({ kind: "not_found" }, null);
   });
 };
-
+	
 Voluntario.getAll = result => {
-  sql.query("SELECT * FROM voluntario", (err, res) => {
+  sql.query("SELECT * FROM voluntario v, celula c WHERE v.id_celula = c.id_celula", (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
-	  console.log("found all voluntarios: ");
-    // console.log("examples: ", res);
-    result(null, res);
+	  console.log("voluntarios encontradas",res);
+	  result(null, res);
   });
 };
 
 Voluntario.updateById = (id_voluntario, voluntario, result) => {
-  sql.query(
-    "UPDATE voluntario SET id_celula = ?, nombre = ?, apellido = ?, numero_celular = ?, fecha_nacimiento = ?, correo = ?, ciudad_pais = ?, WHERE id_voluntario = ?",
-    [voluntario.id_celula, voluntario.nombre, voluntario.apellido, voluntario.numero_celular,
-	 voluntario.fecha_nacimiento, voluntario.correo, voluntario.ciudad_pais, id_voluntario],
+  sql.query("UPDATE voluntario SET id_celula = ?, nombre = ?, apellido = ?, numero_celular = ?,fecha_nacimiento = ?, correo = ?, ciudad_pais = ? WHERE id_voluntario = ?",
+    [voluntario.id_celula, voluntario.nombre, voluntario.apellido, voluntario.numero_celular,voluntario.fecha_nacimiento,voluntario.correo,voluntario.ciudad_pais,id_voluntario],
     (err, res) => {
       if (err) {
-        console.log("error: ", err);
+        console.log("Error: ", err);
         result(null, err);
         return;
       }
@@ -74,7 +71,7 @@ Voluntario.updateById = (id_voluntario, voluntario, result) => {
         return;
       }
 
-      console.log("updated voluntario: ", { id: id_voluntario, ...voluntario });
+      console.log("voluntario: actualizada", { id: id_voluntario, ...voluntario });
       result(null, { id: id_voluntario, ...voluntario });
     }
   );
@@ -83,7 +80,7 @@ Voluntario.updateById = (id_voluntario, voluntario, result) => {
 Voluntario.remove = (id_voluntario, result) => {
   sql.query("DELETE FROM voluntario WHERE id_voluntario = ?", id_voluntario, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Error: ", err);
       result(null, err);
       return;
     }
@@ -94,7 +91,7 @@ Voluntario.remove = (id_voluntario, result) => {
       return;
     }
 
-    console.log("deleted voluntario with id: ", id_voluntario);
+    console.log("voluntario borrada con id: ", id_voluntario);
     result(null, res);
   });
 };
