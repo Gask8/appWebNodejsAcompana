@@ -3,7 +3,7 @@ const qrcode = require('qrcode-terminal');
 
 const client = new Client({
     authStrategy: new LocalAuth(),
-    puppeteer: { headless: true }
+    puppeteer: {args: ["--no-sandbox"] }
   });
 
   client.on('qr', (qr) => {

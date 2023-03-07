@@ -6,7 +6,7 @@ let client;
 const withSession = () => {
     client = new Client({
         authStrategy: new LocalAuth(),
-        puppeteer: { headless: true }
+        puppeteer: { args: ["--no-sandbox"],headless: true }
     });
     
     client.on('auth_failure', msg => {
